@@ -1,28 +1,7 @@
 import { defineConfig } from 'vite'
 import path from 'path'
-import vituum from 'vituum'
-import sassGlobImports from 'vite-plugin-sass-glob-import'
-
-import posthtml from '@vituum/vite-plugin-posthtml'
-import tailwindcss from '@vituum/vite-plugin-tailwindcss'
-
-import posthtmlFetch from 'posthtml-fetch'
-import expressions from 'posthtml-expressions'
-import beautify from 'posthtml-beautify'
-import imgAutosize from 'posthtml-img-autosize'
-import posthtmlWebp from 'posthtml-webp'
-import posthtmlReplace from 'posthtml-replace'
-
-import PurgeCSS from 'vite-plugin-purgecss'
-import viteImagemin from '@vheemstra/vite-plugin-imagemin'
-
 import templateCfg from './template.config.js'
-
-import imageminMozjpeg from 'imagemin-mozjpeg'
-import imageminWebp from 'imagemin-webp'
-import imageminPngquant from 'imagemin-pngquant'
-
-import viteHtmlAliasPlugin from './plugins/htmlAliasPlugin.js'
+import modules from './imports.js'
 
 const rootPath = './src'
 
@@ -36,21 +15,21 @@ const isProduction = process.env.NODE_ENV === 'production'
 
 export default defineConfig({
   plugins: [
-    tailwindcss(),
-    viteHtmlAliasPlugin(aliases),
-    sassGlobImports(),
-    vituum(),
-    posthtml({
+    // modules.tailwindcss(),
+    modules.viteHtmlAliasPlugin(aliases),
+    modules.sassGlobImports(),
+    modules.vituum(),
+    modules.posthtml({
       encoding: 'utf-8',
       root: process.cwd(),
       plugins: [
         ...((isProduction && templateCfg.images.makeWebp)
-          ? [posthtmlWebp({ classIgnore: [...templateCfg.images.ignoreWebpClasses], }),] : []
+          ? [modules.posthtmlWebp({ classIgnore: [...templateCfg.images.ignoreWebpClasses], }),] : []
         ),
-        posthtmlFetch(),
-        expressions(),
-        imgAutosize(),
-        posthtmlReplace([
+        modules.posthtmlFetch(),
+        modules.expressions(),
+        modules.imgAutosize(),
+        modules.posthtmlReplace([
           {
             match: { tag: 'img', },
             attrs: { src: { from: '@img/', to: templateCfg.aliases['@img'], } }
@@ -69,16 +48,16 @@ export default defineConfig({
           },
         ]),
 
-        beautify({ rules: { blankLines: '', sortAttrs: true }, }),
+        modules.beautify({ rules: { blankLines: '', sortAttrs: true }, }),
       ],
     }),
 
-
-    ...((tailwindcss) ? [tailwindcss(),] : []),
+    // TailwindCSS
+    ...((templateCfg.tailwindcss) ? [modules.tailwindcss(),] : []),
 
     // PurgeCSS "Cleaner"
     ...((isProduction && templateCfg.cleanCss) ? [
-      PurgeCSS({
+      modules.PurgeCSS({
         content: ['./src/**/*.html', './src/**/*.js'],
         defaultExtractor: (content) =>
           content.match(/[\w-/:]+(?<!:)/g) || [],
@@ -87,15 +66,15 @@ export default defineConfig({
 
     // Image optimization
     ...((isProduction && templateCfg.images.imageMin) ? [
-      viteImagemin({
+      modules.viteImagemin({
         plugins: {
-          jpg: imageminMozjpeg({ quality: templateCfg.images.imageQuality.jpg || 75 }),
-          png: imageminPngquant({ quality: templateCfg.images.imageQuality.png || [0.6, 0.8] }),
+          jpg: modules.imageminMozjpeg({ quality: templateCfg.images.imageQuality.jpg || 75 }),
+          png: modules.imageminPngquant({ quality: templateCfg.images.imageQuality.png || [0.6, 0.8] }),
         },
         makeWebp: templateCfg.images.makeWebp ? {
           plugins: {
-            jpg: imageminWebp({ quality: templateCfg.images.imageQuality.webp || 75 }),
-            png: imageminWebp({ quality: templateCfg.images.imageQuality.webp || 75 }),
+            jpg: modules.imageminWebp({ quality: templateCfg.images.imageQuality.webp || 75 }),
+            png: modules.imageminWebp({ quality: templateCfg.images.imageQuality.webp || 75 }),
           },
         } : undefined,
       }),
