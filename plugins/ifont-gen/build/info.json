@@ -1,0 +1,188 @@
+{
+  "arrow-back": {
+    "encodedCode": "\\ea01",
+    "prefix": "_icon",
+    "className": "_icon-arrow-back",
+    "unicode": "&#59905;"
+  },
+  "arrow-next": {
+    "encodedCode": "\\ea02",
+    "prefix": "_icon",
+    "className": "_icon-arrow-next",
+    "unicode": "&#59906;"
+  },
+  "calendar": {
+    "encodedCode": "\\ea03",
+    "prefix": "_icon",
+    "className": "_icon-calendar",
+    "unicode": "&#59907;"
+  },
+  "checked": {
+    "encodedCode": "\\ea04",
+    "prefix": "_icon",
+    "className": "_icon-checked",
+    "unicode": "&#59908;"
+  },
+  "clock": {
+    "encodedCode": "\\ea05",
+    "prefix": "_icon",
+    "className": "_icon-clock",
+    "unicode": "&#59909;"
+  },
+  "close-bold": {
+    "encodedCode": "\\ea06",
+    "prefix": "_icon",
+    "className": "_icon-close-bold",
+    "unicode": "&#59910;"
+  },
+  "close-lg": {
+    "encodedCode": "\\ea07",
+    "prefix": "_icon",
+    "className": "_icon-close-lg",
+    "unicode": "&#59911;"
+  },
+  "close-x": {
+    "encodedCode": "\\ea08",
+    "prefix": "_icon",
+    "className": "_icon-close-x",
+    "unicode": "&#59912;"
+  },
+  "close": {
+    "encodedCode": "\\ea09",
+    "prefix": "_icon",
+    "className": "_icon-close",
+    "unicode": "&#59913;"
+  },
+  "download": {
+    "encodedCode": "\\ea0a",
+    "prefix": "_icon",
+    "className": "_icon-download",
+    "unicode": "&#59914;"
+  },
+  "facebook": {
+    "encodedCode": "\\ea0b",
+    "prefix": "_icon",
+    "className": "_icon-facebook",
+    "unicode": "&#59915;"
+  },
+  "instagram": {
+    "encodedCode": "\\ea0c",
+    "prefix": "_icon",
+    "className": "_icon-instagram",
+    "unicode": "&#59916;"
+  },
+  "location": {
+    "encodedCode": "\\ea0d",
+    "prefix": "_icon",
+    "className": "_icon-location",
+    "unicode": "&#59917;"
+  },
+  "mail": {
+    "encodedCode": "\\ea0e",
+    "prefix": "_icon",
+    "className": "_icon-mail",
+    "unicode": "&#59918;"
+  },
+  "menu": {
+    "encodedCode": "\\ea0f",
+    "prefix": "_icon",
+    "className": "_icon-menu",
+    "unicode": "&#59919;"
+  },
+  "pdf": {
+    "encodedCode": "\\ea10",
+    "prefix": "_icon",
+    "className": "_icon-pdf",
+    "unicode": "&#59920;"
+  },
+  "phone-border": {
+    "encodedCode": "\\ea11",
+    "prefix": "_icon",
+    "className": "_icon-phone-border",
+    "unicode": "&#59921;"
+  },
+  "phone": {
+    "encodedCode": "\\ea12",
+    "prefix": "_icon",
+    "className": "_icon-phone",
+    "unicode": "&#59922;"
+  },
+  "phone2": {
+    "encodedCode": "\\ea13",
+    "prefix": "_icon",
+    "className": "_icon-phone2",
+    "unicode": "&#59923;"
+  },
+  "question": {
+    "encodedCode": "\\ea14",
+    "prefix": "_icon",
+    "className": "_icon-question",
+    "unicode": "&#59924;"
+  },
+  "search": {
+    "encodedCode": "\\ea15",
+    "prefix": "_icon",
+    "className": "_icon-search",
+    "unicode": "&#59925;"
+  },
+  "settings": {
+    "encodedCode": "\\ea16",
+    "prefix": "_icon",
+    "className": "_icon-settings",
+    "unicode": "&#59926;"
+  },
+  "staple": {
+    "encodedCode": "\\ea17",
+    "prefix": "_icon",
+    "className": "_icon-staple",
+    "unicode": "&#59927;"
+  },
+  "star-false": {
+    "encodedCode": "\\ea18",
+    "prefix": "_icon",
+    "className": "_icon-star-false",
+    "unicode": "&#59928;"
+  },
+  "star-true": {
+    "encodedCode": "\\ea19",
+    "prefix": "_icon",
+    "className": "_icon-star-true",
+    "unicode": "&#59929;"
+  },
+  "telegram": {
+    "encodedCode": "\\ea1a",
+    "prefix": "_icon",
+    "className": "_icon-telegram",
+    "unicode": "&#59930;"
+  },
+  "time": {
+    "encodedCode": "\\ea1b",
+    "prefix": "_icon",
+    "className": "_icon-time",
+    "unicode": "&#59931;"
+  },
+  "upload": {
+    "encodedCode": "\\ea1c",
+    "prefix": "_icon",
+    "className": "_icon-upload",
+    "unicode": "&#59932;"
+  },
+  "viber": {
+    "encodedCode": "\\ea1d",
+    "prefix": "_icon",
+    "className": "_icon-viber",
+    "unicode": "&#59933;"
+  },
+  "whatsapp": {
+    "encodedCode": "\\ea1e",
+    "prefix": "_icon",
+    "className": "_icon-whatsapp",
+    "unicode": "&#59934;"
+  },
+  "youtube": {
+    "encodedCode": "\\ea1f",
+    "prefix": "_icon",
+    "className": "_icon-youtube",
+    "unicode": "&#59935;"
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "~assets/*": ["src/assets/*"],
+      "~html/*": ["src/html/*"],
+      "~js/*": ["src/js/*"],
+      "~pages/*": ["src/pages/*"],
+      "~scss/*": ["src/scss/*"],
+      "~/*": ["src/*"],
+      "@assets/*": ["assets/*"],
+      "@html/*": ["html/*"],
+      "@js/*": ["js/*"],
+      "@pages/*": ["pages/*"],
+      "@scss/*": ["scss/*"],
+      "@/*": ["src/*"],
+      "@src/*": ["src/*"]
+    }
+  }
+}

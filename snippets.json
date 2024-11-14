@@ -1,0 +1,33 @@
+{
+  "Include Tag": {
+    "scope": "html",
+    "prefix": "inc",
+    "body": [
+      "<include src=\"@cmp/$1\" locals='${3:{ \"key\": \"value\" }}'></include>"
+    ],
+    "description": "Template for include ta z parameter src"
+  },
+  "@include-json": {
+    "scope": "html",
+    "prefix": "incjson",
+    "body": [
+      "<include-json",
+      "\tsrc=\"@cmp/$1\"",
+      "\tjson=\"@cmp/$1\">",
+      "</include-json>"
+    ],
+    "description": "Insert Include-JSON component with ways to html and json files"
+  },
+  "Include Loop Tag": {
+    "scope": "html",
+    "prefix": "incloop",
+    "body": [
+      "<include-loop",
+      "    loop=\"$1\"",
+      "    src=\"$2\"",
+      "    locals='${3:{ \"key\": \"value\" }}'>",
+      "</include-loop>"
+    ],
+    "description": "Include-loop tag with Loop, SRC and LOCALS"
+  }
+}
