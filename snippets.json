@@ -1,33 +1,78 @@
 {
-  "Include Tag": {
-    "scope": "html",
-    "prefix": "inc",
-    "body": [
-      "<include src=\"@cmp/$1\" locals='${3:{ \"key\": \"value\" }}'></include>"
-    ],
-    "description": "Template for include ta z parameter src"
+  "Include Component": {
+    "prefix": "include",
+    "body": ["<include src=\"./src/html/components/$1\"></include>"],
+    "description": "Вставляє компонент header"
   },
-  "@include-json": {
-    "scope": "html",
-    "prefix": "incjson",
+
+  "Include Card Locals": {
+    "prefix": "includeLocals",
     "body": [
-      "<include-json",
-      "\tsrc=\"@cmp/$1\"",
-      "\tjson=\"@cmp/$1\">",
-      "</include-json>"
+      "<include",
+      "  src=\"./src/html/components/${1:component}\"",
+      "  locals='{$2}'>",
+      "</include>"
     ],
-    "description": "Insert Include-JSON component with ways to html and json files"
+    "description": "Вставка компонента card з можливістю передати змінні через locals"
   },
-  "Include Loop Tag": {
-    "scope": "html",
-    "prefix": "incloop",
+  "Ternary Expression": {
+    "prefix": "ternary",
+    "body": ["{{ ${1:condition} ? '${2:trueValue}' : '${3:falseValue}' }}"],
+    "description": "Тернарний вираз з умовою та двома можливими значеннями"
+  },
+  "Conditional Block": {
+    "prefix": "ifelse",
     "body": [
-      "<include-loop",
-      "    loop=\"$1\"",
-      "    src=\"$2\"",
-      "    locals='${3:{ \"key\": \"value\" }}'>",
-      "</include-loop>"
+      "<if condition=\"${1:variable} === '${2:value}'\">${3:Lorem1}</if>",
+      "<elseif condition=\"${1:variable} === '${4:value2}'\">${5:Lorem2}</elseif>",
+      "<else>{{${1:variable}}}</else>"
     ],
-    "description": "Include-loop tag with Loop, SRC and LOCALS"
+    "description": "Умова з if, elseif та else"
+  },
+  "Switch Case": {
+    "prefix": "switch",
+    "body": [
+      "<switch expression=\"${1:variable}\">",
+      "  <case n=\"${2:1}\">${3:'<span>value1</span>'}</case>",
+      "  <case n=\"${4:2}\">${5:'<span>value2</span>'}</case>",
+      "  <case n=\"${6:3}\">${7:'<span>value3</span>'}</case>",
+      "  <default>{{${1:variable}}}</default>",
+      "</switch>"
+    ],
+    "description": "Switch case блок"
+  },
+  "Fetch with Each Loop and Custom Content": {
+    "prefix": "fetch-content",
+    "body": [
+      "<fetch url=\"./src/html/components/${1:json_path}\">",
+      "  <each loop=\"${2:item, index in response}\">",
+      "    ${3:custom_content}",
+      "  </each>",
+      "</fetch>"
+    ],
+    "description": "Fetch block with each loop and custom content"
+  },
+  "Fetch with Each Loop and Include": {
+    "prefix": "fetch-include",
+    "body": [
+      "<fetch url=\"./src/html/components/${1:json_path}\">",
+      "  <each loop=\"${2:item, index in response}\">",
+      "    <include",
+      "      src=\"./src/html/components/${3:component_path}\"",
+      "      locals='${4:locals_object}'>",
+      "    </include>",
+      "  </each>",
+      "</fetch>"
+    ],
+    "description": "Fetch block with each loop and include component"
+  },
+  "Each Loop with Include Component": {
+    "prefix": "loop-include",
+    "body": [
+      "<each loop=\"${1:item, index in ['', '', '']}\">",
+      "  <include src=\"./src/html/components/${2:component_path}\"></include>",
+      "</each>"
+    ],
+    "description": "Each loop with include component"
   }
 }
