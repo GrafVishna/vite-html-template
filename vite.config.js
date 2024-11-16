@@ -3,20 +3,11 @@ import path from 'path'
 import templateCfg from './template.config.js'
 import modules from './imports.js'
 
-const rootPath = './src'
-
-const makeAliases = (aliases) => {
-  return Object.entries(aliases).map(([key, value]) => {
-    return { key: path.resolve(process.cwd(), value) }
-  })
-}
-const aliases = makeAliases(templateCfg.aliases)
 const isProduction = process.env.NODE_ENV === 'production'
 
 export default defineConfig({
+  publicDir: 'src/assets/',
   plugins: [
-    // modules.tailwindcss(),
-    modules.viteHtmlAliasPlugin(aliases),
     modules.sassGlobImports(),
     modules.vituum(),
     modules.posthtml({
@@ -28,32 +19,13 @@ export default defineConfig({
         ),
         modules.posthtmlFetch(),
         modules.expressions(),
-        modules.imgAutosize(),
-        modules.posthtmlReplace([
-          {
-            match: { tag: 'img', },
-            attrs: { src: { from: '@img/', to: templateCfg.aliases['@img'], } }
-          },
-          {
-            match: { tag: 'source', },
-            attrs: { srcset: { from: '/src/assets/img/', to: '/img/', } }
-          },
-          {
-            match: { tag: 'video' },
-            attrs: { src: { from: '@vid/', to: templateCfg.aliases['@vid'], } }
-          },
-          {
-            match: { tag: 'include', },
-            attrs: { src: { from: '@cmp/', to: templateCfg.aliases['@cmp'], } }
-          },
-        ]),
-
         modules.beautify({ rules: { blankLines: '', sortAttrs: true }, }),
+        ...((templateCfg.addImgSizes) ? [modules.imgAutosize(),] : []),
       ],
     }),
 
     // TailwindCSS
-    ...((templateCfg.tailwindcss) ? [modules.tailwindcss(),] : []),
+    ...((templateCfg.tailwindcss) ? [modules.tailwindcss()] : []),
 
     // PurgeCSS "Cleaner"
     ...((isProduction && templateCfg.cleanCss) ? [
@@ -92,11 +64,6 @@ export default defineConfig({
     },
   ],
 
-  // Aliases
-  resolve: {
-    alias: { ...aliases },
-  },
-
   // CSS preprocessor
   css: {
     preprocessorOptions: {
@@ -123,13 +90,15 @@ export default defineConfig({
 
   // Build config
   build: {
+    root: './src',
     target: 'esnext',
-    root: rootPath,
     assetsDir: 'src/assets',
     sourcemap: true,
+
     modulePreload: {
       polyfill: false,
     },
+
     rollupOptions: {
       output: {
         format: 'es',
@@ -140,7 +109,7 @@ export default defineConfig({
           const srcPath = asset.originalFileNames
             ? asset.originalFileNames[0].replace('src/assets/', '').replace(/\/([^/]+)$/g, '')
             : ''
-          console.log(srcPath)
+
           const folders = {
             css: 'css',
             png: srcPath,
