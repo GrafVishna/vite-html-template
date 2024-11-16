@@ -1,5 +1,11 @@
 {
   "compilerOptions": {
-    "baseUrl": ".",
-  }
+    "target": "esnext",
+    "baseUrl": "./",
+    "paths": {
+      "@img/*": ["/src/assets/img"],
+      "assets/*": ["src/assets"]
+    }
+  },
+  "exclude": ["node_modules"]
 }

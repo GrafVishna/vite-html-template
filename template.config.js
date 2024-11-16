@@ -15,8 +15,11 @@ export default {
 
    aliases: {
       '@': './src/',
-      '@js': './src/js',
-      '@scss': './src/scss',
+      '@js': './src/js/',
+      '@scss': './src/scss/',
+      '@img': './src/assets/img/',
+      '@files': './src/assets/files/',
+      '@html': './src/html/',
       '@cmp': './src/html/components/',
    }
 }

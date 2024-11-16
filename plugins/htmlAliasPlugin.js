@@ -31,11 +31,13 @@ function viteHtmlAliasPlugin(aliases, tags = defaultTags) {
 
               aliasMap.forEach((aliasPath, alias) => {
                 if (attrValue.startsWith(alias)) {
-                  const relativePath = path.relative(
-                    process.cwd(),
-                    attrValue.replace(alias, aliasPath)
-                  )
-                  el.setAttribute(attr, `/${relativePath}`)
+                  const absolutePath = attrValue.replace(alias, aliasPath)
+                  const normalizedPath = path
+                    .relative(process.cwd(), absolutePath)
+                    .split(path.sep)
+                    .join('/')
+
+                  el.setAttribute(attr, `/${normalizedPath}`)
                 }
               })
             })

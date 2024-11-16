@@ -2,12 +2,22 @@ import { defineConfig } from 'vite'
 import path from 'path'
 import templateCfg from './template.config.js'
 import modules from './imports.js'
+import viteHtmlAliasPlugin from './plugins/htmlAliasPlugin.js'
 
+const makeAliases = (aliases) => {
+  return Object.entries(aliases).reduce((acc, [key, value]) => {
+    acc[key] = path.resolve(process.cwd(), value)
+    return acc
+  }, {})
+}
+
+const aliases = makeAliases(templateCfg.aliases)
 const isProduction = process.env.NODE_ENV === 'production'
 
 export default defineConfig({
   // publicDir: 'src/assets/',
   plugins: [
+    viteHtmlAliasPlugin(aliases),
     modules.sassGlobImports(),
     modules.vituum(),
     modules.posthtml({
@@ -89,13 +99,17 @@ export default defineConfig({
     },
   },
 
+  resolve: {
+    alias: { ...aliases },
+  },
+
   // Build config
   build: {
     root: './src',
     target: 'esnext',
     assetsDir: 'src/assets',
     sourcemap: true,
-
+    assetsInlineLimit: 0,
     modulePreload: {
       polyfill: false,
     },
