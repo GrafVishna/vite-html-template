@@ -1,6 +1,5 @@
-%ic {
-  font-family: "icons" !important;
-  display: block;
+[class*="_icon-"] {
+  font-family: 'icons' !important;
   font-style: normal;
   font-weight: normal;
   font-variant: normal;
@@ -10,15 +9,11 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
-[class*="_icon-"] {
-  @extend %ic;
-} 
 
-
+:global {
 :root {
 --_icon-instagram: "\ea01";
 }
 ._icon-instagram:before { content: var(--_icon-instagram); }
 
-
-$_icon-instagram: '\ea01';
+}

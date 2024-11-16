@@ -70,13 +70,13 @@ export const generateFontsStyle = async () => {
 @font-face {
    font-family: '${fontName}';
    font-display: swap;
-   src: url("/fonts/${fontFileName}.woff2") format("woff2");
+   src: url("${fontsFilesScss}${fontFileName}.woff2") format("woff2");
    font-weight: ${fontWeight};
    font-style: ${fontStyle};
 }
                     `
           headFileContent += `
-<link rel="preload" href="/fonts/${fontFileName}.woff2" as="font" type="font/woff2" crossorigin="anonymous" />`
+<link rel="preload" href="${fontsFilesScss}${fontFileName}.woff2" as="font" type="font/woff2" crossorigin="anonymous" />`
           newFileOnly = fontFileName
         }
       }

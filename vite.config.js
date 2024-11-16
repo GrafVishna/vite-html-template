@@ -6,7 +6,7 @@ import modules from './imports.js'
 const isProduction = process.env.NODE_ENV === 'production'
 
 export default defineConfig({
-  publicDir: 'src/assets/',
+  // publicDir: 'src/assets/',
   plugins: [
     modules.sassGlobImports(),
     modules.vituum(),
@@ -75,6 +75,7 @@ export default defineConfig({
 
   // Server config
   server: {
+    host: '0.0.0.0',
     watch: {
       ignored: [
         '**/vendor/**',
