@@ -10,7 +10,8 @@
     "build": "vite build",
     "preview": "vite preview",
     "fonts": "node ./plugins/convertFonts.js && node ./plugins/iconsFontGenerator.js",
-    "ifont": "node ./plugins/iconsFontGenerator.js"
+    "ifont": "node ./plugins/iconsFontGenerator.js",
+    "aliases": "node ./plugins/generateAliases.js"
   },
   "devDependencies": {
     "@vituum/vite-plugin-tailwindcss": "^1.2.0",

@@ -1,15 +1,14 @@
 {
   "Include Component": {
     "prefix": "include",
-    "body": ["<include src=\"./src/html/components/$1\"></include>"],
+    "body": ["<include src=\"@c${1:/component_path}\"></include>"],
     "description": "Вставляє компонент header"
   },
-
   "Include Card Locals": {
     "prefix": "includeLocals",
     "body": [
       "<include",
-      "  src=\"./src/html/components/${1:component}\"",
+      "  src=\"@c${1:/component_path}\"",
       "  locals='{$2}'>",
       "</include>"
     ],
@@ -44,7 +43,7 @@
   "Fetch with Each Loop and Custom Content": {
     "prefix": "fetch-content",
     "body": [
-      "<fetch url=\"./src/html/components/${1:json_path}\">",
+      "<fetch url=\"@c${1:/json_path}\">",
       "  <each loop=\"${2:item, index in response}\">",
       "    ${3:custom_content}",
       "  </each>",
@@ -55,10 +54,10 @@
   "Fetch with Each Loop and Include": {
     "prefix": "fetch-include",
     "body": [
-      "<fetch url=\"./src/html/components/${1:json_path}\">",
+      "<fetch url=\"@c${1:/json_path}\">",
       "  <each loop=\"${2:item, index in response}\">",
       "    <include",
-      "      src=\"./src/html/components/${3:component_path}\"",
+      "      src=\"@c${3:/component_path}\"",
       "      locals='${4:locals_object}'>",
       "    </include>",
       "  </each>",
@@ -70,7 +69,7 @@
     "prefix": "loop-include",
     "body": [
       "<each loop=\"${1:item, index in ['', '', '']}\">",
-      "  <include src=\"./src/html/components/${2:component_path}\"></include>",
+      "  <include src=\"@c${2:/component_path}\"></include>",
       "</each>"
     ],
     "description": "Each loop with include component"

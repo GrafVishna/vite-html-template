@@ -9,6 +9,9 @@ const defaultTags = {
   use: ['xlink:href', 'href'],
   link: ['href'],
   script: ['src'],
+  include: ['src'],
+  extend: ['src'],
+  fetch: ['url'],
 }
 
 function viteHtmlAliasPlugin(aliases, tags = defaultTags) {
@@ -16,7 +19,7 @@ function viteHtmlAliasPlugin(aliases, tags = defaultTags) {
 
   return {
     name: 'vite-html-alias-plugin',
-    order: 'pre',
+    enforce: 'pre',
 
     transformIndexHtml: {
       order: 'pre',
@@ -31,13 +34,20 @@ function viteHtmlAliasPlugin(aliases, tags = defaultTags) {
 
               aliasMap.forEach((aliasPath, alias) => {
                 if (attrValue.startsWith(alias)) {
-                  const absolutePath = attrValue.replace(alias, aliasPath)
+                  let absolutePath = attrValue.replace(alias, aliasPath)
+
+                  absolutePath = path.normalize(absolutePath)
+
                   const normalizedPath = path
                     .relative(process.cwd(), absolutePath)
                     .split(path.sep)
                     .join('/')
 
-                  el.setAttribute(attr, `/${normalizedPath}`)
+                  if (tag !== 'include' && tag !== 'fetch' && tag !== 'extend') {
+                    el.setAttribute(attr, `/${normalizedPath}`)
+                  } else {
+                    el.setAttribute(attr, `./${normalizedPath}`)
+                  }
                 }
               })
             })

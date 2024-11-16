@@ -3,9 +3,27 @@
     "target": "esnext",
     "baseUrl": "./",
     "paths": {
-      "@img/*": ["/src/assets/img"],
-      "assets/*": ["src/assets"]
+      "@h/*": [
+        "src/html/*"
+      ],
+      "@c/*": [
+        "src/html/components/*"
+      ],
+      "@j/*": [
+        "src/js/*"
+      ],
+      "@s/*": [
+        "src/scss/*"
+      ],
+      "@i/*": [
+        "src/assets/img/*"
+      ],
+      "@f/*": [
+        "src/assets/files/*"
+      ]
     }
   },
-  "exclude": ["node_modules"]
+  "exclude": [
+    "node_modules"
+  ]
 }
