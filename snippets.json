@@ -44,8 +44,8 @@
     "prefix": "fetch-content",
     "body": [
       "<fetch url=\"@c${1:/json_path}\">",
-      "  <each loop=\"${2:item, index in response}\">",
-      "    ${3:custom_content}",
+      "  <each loop=\"${2:post, index in response}\">",
+      "    $3",
       "  </each>",
       "</fetch>"
     ],
@@ -56,10 +56,7 @@
     "body": [
       "<fetch url=\"@c${1:/json_path}\">",
       "  <each loop=\"${2:item, index in response}\">",
-      "    <include",
-      "      src=\"@c${3:/component_path}\"",
-      "      locals='${4:locals_object}'>",
-      "    </include>",
+      "    <include src=\"@c${3:/}\"></include>",
       "  </each>",
       "</fetch>"
     ],
@@ -69,7 +66,7 @@
     "prefix": "loop-include",
     "body": [
       "<each loop=\"${1:item, index in ['', '', '']}\">",
-      "  <include src=\"@c${2:/component_path}\"></include>",
+      "  <include src=\"@c${2:/}\"></include>",
       "</each>"
     ],
     "description": "Each loop with include component"

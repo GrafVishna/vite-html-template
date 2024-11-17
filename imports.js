@@ -1,6 +1,5 @@
 import vituum from 'vituum'
 import sassGlobImports from 'vite-plugin-sass-glob-import'
-import posthtml from '@vituum/vite-plugin-posthtml'
 import tailwindcss from '@vituum/vite-plugin-tailwindcss'
 import posthtmlFetch from 'posthtml-fetch'
 import expressions from 'posthtml-expressions'
@@ -13,7 +12,7 @@ import viteImagemin from '@vheemstra/vite-plugin-imagemin'
 import imageminMozjpeg from 'imagemin-mozjpeg'
 import imageminWebp from 'imagemin-webp'
 import imageminPngquant from 'imagemin-pngquant'
-import viteHtmlAliasPlugin from './plugins/htmlAliasPlugin.js'
+import posthtml from './plugins/posthtml/customPostHtml.js'
 
 export default {
    vituum,
@@ -31,5 +30,4 @@ export default {
    imageminMozjpeg,
    imageminWebp,
    imageminPngquant,
-   viteHtmlAliasPlugin,
 }

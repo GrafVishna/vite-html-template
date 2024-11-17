@@ -14,7 +14,6 @@ function generateConfigFiles() {
             return acc
          }, {}),
       },
-      exclude: ['node_modules'],
    }
 
    const vscodeSettings = {

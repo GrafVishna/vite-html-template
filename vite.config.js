@@ -3,6 +3,7 @@ import path from 'path'
 import templateCfg from './template.config.js'
 import modules from './imports.js'
 
+
 const makeAliases = (aliases) => {
   return Object.entries(aliases).reduce((acc, [key, value]) => {
     acc[key] = path.resolve(process.cwd(), value)
@@ -15,7 +16,6 @@ const isProduction = process.env.NODE_ENV === 'production'
 
 export default defineConfig({
   plugins: [
-    modules.viteHtmlAliasPlugin(aliases),
     modules.sassGlobImports(),
     modules.vituum(),
     modules.posthtml({
@@ -65,7 +65,8 @@ export default defineConfig({
       name: 'custom-hmr',
       enforce: 'post',
       handleHotUpdate({ file, server }) {
-        if (file.endsWith('.html')) {
+        console.log(file)
+        if (file.endsWith('.html') || file.endsWith('.json')) {
           server.ws.send({ type: 'full-reload', path: '*' })
         }
       },
@@ -87,7 +88,6 @@ export default defineConfig({
     watch: {
       ignored: [
         '**/vendor/**',
-        '**/storage/**',
         '**/node_modules/**',
         '**/ifont-gen/**',
         '**/plugins/**',
@@ -98,6 +98,7 @@ export default defineConfig({
         '**/yarn.lock/**',
         '**/snippets.json/**',
       ],
+      include: ['./src/**/*.json'],
     },
   },
 
