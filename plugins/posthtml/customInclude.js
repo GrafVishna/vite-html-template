@@ -20,10 +20,10 @@ export default (options = {}) => {
    const defaultAliases = {
       '@h': './src/html/',
       '@c': './src/html/components/',
-      '@j': './src/js/',
-      '@s': './src/scss/',
-      '@i': './src/assets/img/',
-      '@f': './src/assets/files/',
+      '@j': '/src/js/',
+      '@s': '/src/scss/',
+      '@i': '/src/assets/img/',
+      '@f': '/src/assets/files/',
    }
 
    const finalAliases = { ...defaultAliases, ...templateCfg.aliases }

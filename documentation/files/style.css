@@ -2,6 +2,44 @@ body {
    font-family: Arial, sans-serif;
    line-height: 1.6;
    width: 100%;
+   font-size: 16px !important;
+}
+
+@media (max-width: 900px) {
+   body {
+      font-size: 14px !important;
+   }
+}
+
+@media (max-width: 700px) {
+   body {
+      font-size: 13px !important;
+   }
+}
+
+details details,
+details>p {
+   padding-left: 12px;
+}
+
+details details details,
+details details>p {
+   padding-left: 12px;
+}
+
+details details details details,
+details details details>p {
+   padding-left: 12px;
+}
+
+details details details details details,
+details details details details>p {
+   padding-left: 12px;
+}
+
+summary {
+   display: flex;
+   align-items: center;
 }
 
 * {
@@ -71,6 +109,7 @@ code {
       color: #088d11;
       font-weight: 600;
    }
+
    i {
       color: #b5b5b5;
    }

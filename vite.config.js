@@ -22,13 +22,13 @@ export default defineConfig({
       encoding: 'utf-8',
       root: process.cwd(),
       plugins: [
-        ...((isProduction && templateCfg.images.makeWebp)
-          ? [modules.posthtmlWebp({ classIgnore: [...templateCfg.images.ignoreWebpClasses], }),] : []
-        ),
         modules.posthtmlFetch(),
         modules.expressions(),
         modules.beautify({ rules: { blankLines: '', sortAttrs: true }, }),
         ...((templateCfg.addImgSizes) ? [modules.imgAutosize(),] : []),
+        ...((isProduction && templateCfg.images.makeWebp)
+          ? [modules.posthtmlWebp({ classIgnore: [...templateCfg.images.ignoreWebpClasses], }),] : []
+        ),
       ],
     }),
 

@@ -10,17 +10,17 @@
         "src/html/components/*"
       ],
       "@j/*": [
-        "src/js/*"
+        "/src/js/*"
       ],
       "@s/*": [
-        "src/scss/*"
+        "/src/scss/*"
       ],
       "@i/*": [
-        "src/assets/img/*"
+        "/src/assets/img/*"
       ],
       "@f/*": [
-        "src/assets/files/*"
+        "/src/assets/files/*"
       ]
     }
-  },
+  }
 }

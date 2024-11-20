@@ -2,7 +2,7 @@ export default {
    tailwindcss: false,
    cleanCss: true,
    images: {
-      imageMin: false,
+      imageMin: true,
       makeWebp: false,
       addImgSizes: false,
       ignoreWebpClasses: ['ignore-webp'],
@@ -16,9 +16,9 @@ export default {
    aliases: {
       '@h': './src/html/',
       '@c': './src/html/components/',
-      '@j': './src/js/',
-      '@s': './src/scss/',
-      '@i': './src/assets/img/',
-      '@f': './src/assets/files/'
+      '@j': '/src/js/',
+      '@s': '/src/scss/',
+      '@i': '/src/assets/img/',
+      '@f': '/src/assets/files/'
    }
 }
