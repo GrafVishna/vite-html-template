@@ -24,7 +24,9 @@ export default defineConfig({
       plugins: [
         modules.posthtmlFetch(),
         modules.expressions(),
-        modules.beautify({ rules: { blankLines: '', sortAttrs: true }, }),
+        ...((isProduction)
+          ? [modules.beautify({ rules: { blankLines: '', sortAttrs: true }, })] : []
+        ),
         ...((templateCfg.addImgSizes) ? [modules.imgAutosize(),] : []),
         ...((isProduction && templateCfg.images.makeWebp)
           ? [modules.posthtmlWebp({ classIgnore: [...templateCfg.images.ignoreWebpClasses], }),] : []
@@ -66,7 +68,7 @@ export default defineConfig({
       enforce: 'post',
       handleHotUpdate({ file, server }) {
         console.log(file)
-        if (file.endsWith('.html') || file.endsWith('.json')) {
+        if (file.endsWith('.html')) {
           server.ws.send({ type: 'full-reload', path: '*' })
         }
       },
