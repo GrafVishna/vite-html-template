@@ -12,23 +12,8 @@
       <!-- ============ Main ============ -->
       <main>
 
-        <section class="hero">
-          <div class="hero__container">
-
-            <fetch url="@c/card/cards.json">
-              <each loop="post, index in response">
-                <include src="@c/card/_card.html"></include>
-              </each>
-            </fetch>
-            <span>==================</span>
-            <fetch url="@c/card/cards2.json">
-              <each loop="post, index in response">
-                <include src="@c/card/_card2.html"></include>
-              </each>
-            </fetch>
-
-          </div>
-        </section>
+        <!-- ============ Preview section ============ -->
+        <include src="@c/previewHero/previewHero.html"></include>
 
       </main>
       <!-- ============= Footer ============ -->

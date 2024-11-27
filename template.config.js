@@ -1,5 +1,5 @@
 export default {
-   tailwindcss: false,
+   tailwindcss: true,
    cleanCss: true,
    images: {
       imageMin: true,

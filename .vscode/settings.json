@@ -1,10 +1,10 @@
 {
-  "path-autocomplete.pathMappings": {
-    "@h": "${folder}/src/html/",
-    "@c": "${folder}/src/html/components/",
-    "@j": "${folder}/src/js/",
-    "@s": "${folder}/src/scss/",
-    "@i": "${folder}/src/assets/img/",
-    "@f": "${folder}/src/assets/files/"
+  "path-intellisense.mappings": {
+    "@h": "${workspaceFolder}/src/html",
+    "@c": "${workspaceFolder}/src/html/components",
+    "@j": "${workspaceFolder}/src/js",
+    "@s": "${workspaceFolder}/src/scss",
+    "@i": "${workspaceFolder}/src/assets/img",
+    "@f": "${workspaceFolder}/src/assets/files"
   }
 }

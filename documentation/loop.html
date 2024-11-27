@@ -5,7 +5,7 @@
       <meta charset="UTF-8">
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
       <title>HTML-компоненти</title>
-      <link rel="stylesheet" href="style.css">
+      <link rel="stylesheet" href="files/style.css">
    </head>
 
    <body>
@@ -18,7 +18,7 @@
                Цей документ описує підключення компонентів в циклах, ввивід контенту з json файлу.
             </p>
             <nav>
-               <a href="../docs.html">Головна</a>
+               <a href="index.html">Головна</a>
                <a href="tree.html">Структура</a>
                <a href="posthtml.html">HTML-компоненти</a>
                <a href="conditions.html">Умови та умовні вирази</a>
@@ -41,16 +41,20 @@
                <code>
                   &lt;fetch url="./src/html/components/card/cards-data.json"&gt;<br>
                   &nbsp;&nbsp;&nbsp;&nbsp;&lt;each loop="post, index in response"&gt;<br>
-                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;include<br>
-                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;src="./src/html/components/card/_card.html"<br>
-                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;locals='{<br>
-                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"title": "{{post.title}}",<br>
-                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"description": "{{post.description}}",<br>
-                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"img": "{{post.img}}"<br>
-                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}'&gt;<br>
-                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/include&gt;<br>
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;include src="./src/html/components/card/_card.html"&lt;/include&gt;<br>
                   &nbsp;&nbsp;&nbsp;&nbsp;&lt;/each&gt;<br>
                   &lt;/fetch&gt;
+               </code>
+            </div>
+            <p>*при виклику компонента об'єкт <code>post</code> та <code>index</code> передаються автоматично, і доступні в компоненті так:</p>
+            <code>_card.html</code>
+            <div class="code-block">
+               <code>
+                  &lt;div&gt;<br>
+                  &nbsp;&nbsp;&nbsp;&nbsp;&lt;h2&gt;{{post.title}}&lt;/h2&gt;<br>
+                  &nbsp;&nbsp;&nbsp;&nbsp;&lt;p&gt;{{post.text}}&lt;/p&gt;<br>
+                  &nbsp;&nbsp;&nbsp;&nbsp;&lt;span&gt;{{post.date}}&lt;/span&gt;<br>
+                  &lt;/div&gt;
                </code>
             </div>
 
@@ -117,7 +121,7 @@
 
       </div>
 
-      <script src="script.js"></script>
+      <script src="files/script.js"></script>
 
    </body>
 
