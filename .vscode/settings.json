@@ -1,10 +1,13 @@
 {
   "path-intellisense.mappings": {
-    "@h": "${workspaceFolder}/src/html",
-    "@c": "${workspaceFolder}/src/html/components",
-    "@j": "${workspaceFolder}/src/js",
-    "@s": "${workspaceFolder}/src/scss",
-    "@i": "${workspaceFolder}/src/assets/img",
-    "@f": "${workspaceFolder}/src/assets/files"
+    "@h": "${workspaceFolder}/src/html/",
+    "@o": "${workspaceFolder}/src/html/other/",
+    "@c": "${workspaceFolder}/src/html/components/",
+    "@ui": "${workspaceFolder}/src/html/UI/",
+    "@j": "${workspaceFolder}/src/js/",
+    "@s": "${workspaceFolder}/src/scss/",
+    "@i": "${workspaceFolder}/src/assets/img/",
+    "@v": "${workspaceFolder}/src/assets/video/",
+    "@f": "${workspaceFolder}/src/assets/files/"
   }
 }

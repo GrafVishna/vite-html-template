@@ -13,6 +13,7 @@ import imageminMozjpeg from 'imagemin-mozjpeg'
 import imageminWebp from 'imagemin-webp'
 import imageminPngquant from 'imagemin-pngquant'
 import posthtml from './plugins/posthtml/customPostHtml.js'
+import htmlParse from './plugins/htmlParse.js'
 
 export default {
    vituum,
@@ -30,4 +31,5 @@ export default {
    imageminMozjpeg,
    imageminWebp,
    imageminPngquant,
+   htmlParse
 }

@@ -39,9 +39,9 @@
             <p>Приклад</p>
             <div class="code-block">
                <code>
-                  &lt;fetch url="./src/html/components/card/cards-data.json"&gt;<br>
+                  &lt;fetch url="@с/card/cards-data.json"&gt;<br>
                   &nbsp;&nbsp;&nbsp;&nbsp;&lt;each loop="post, index in response"&gt;<br>
-                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;include src="./src/html/components/card/_card.html"&lt;/include&gt;<br>
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;include src="@с/card/_card.html"&lt;/include&gt;<br>
                   &nbsp;&nbsp;&nbsp;&nbsp;&lt;/each&gt;<br>
                   &lt;/fetch&gt;
                </code>
@@ -62,7 +62,7 @@
             <p>Приклад</p>
             <div class="code-block">
                <code>
-                  &lt;fetch url="./src/html/components/card/cards-data.json"&gt;<br>
+                  &lt;fetch url="@с/card/cards-data.json"&gt;<br>
                   &nbsp;&nbsp;&nbsp;&nbsp;&lt;each loop="post, index in response"&gt;<br>
                   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;div class="card"&gt;<br>
                   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;h2&gt;{{post.title}}&lt;/h2&gt;<br>
@@ -85,7 +85,7 @@
                <code>
                   &lt;ul&gt;<br>
                   &nbsp;&nbsp;&nbsp;&nbsp;&lt;each loop="item, index in ['facebook', 'telegram', 'facebook','twitter']"&gt;<br>
-                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;include src="./src/html/components/card/_list-item.html"&gt;&lt;/include&gt;<br>
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;include src="@с/card/_list-item.html"&gt;&lt;/include&gt;<br>
                   &nbsp;&nbsp;&nbsp;&nbsp;&lt;/each&gt;<br>
                   &lt;/ul&gt;
                </code>
@@ -102,7 +102,7 @@
             <div class="code-block">
                <code>
                   &lt;include<br>
-                  &nbsp;&nbsp;&nbsp;&nbsp;src="./src/html/components/card/_list.html"<br>
+                  &nbsp;&nbsp;&nbsp;&nbsp;src="@с/card/_list.html"<br>
                   &nbsp;&nbsp;&nbsp;&nbsp;locals='{"list": ['facebook', 'telegram', 'facebook','twitter']}'&gt;<br>
                   &lt;/include&gt;
                </code>

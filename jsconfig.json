@@ -1,14 +1,35 @@
 {
   "compilerOptions": {
     "target": "esnext",
-    "baseUrl": "./src",
+    "baseUrl": "./",
     "paths": {
-      "@h/*": ["html/*"],
-      "@c/*": ["html/components/*"],
-      "@j/*": ["js/*"],
-      "@s/*": ["scss/*"],
-      "@i/*": ["assets/img/*"],
-      "@f/*": ["assets/files/*"]
+      "@h/*": [
+        "src/html/*"
+      ],
+      "@o/*": [
+        "src/html/other/*"
+      ],
+      "@c/*": [
+        "src/html/components/*"
+      ],
+      "@ui/*": [
+        "src/html/UI/*"
+      ],
+      "@j/*": [
+        "/src/js/*"
+      ],
+      "@s/*": [
+        "/src/scss/*"
+      ],
+      "@i/*": [
+        "/src/assets/img/*"
+      ],
+      "@v/*": [
+        "/src/assets/video/*"
+      ],
+      "@f/*": [
+        "/src/assets/files/*"
+      ]
     }
   }
 }

@@ -2,7 +2,7 @@ import { defineConfig } from 'vite'
 import path from 'path'
 import templateCfg from './template.config.js'
 import modules from './imports.js'
-
+import postcssPresetEnv from 'postcss-preset-env'
 
 const makeAliases = (aliases) => {
   return Object.entries(aliases).reduce((acc, [key, value]) => {
@@ -14,6 +14,12 @@ const makeAliases = (aliases) => {
 const aliases = makeAliases(templateCfg.aliases)
 const isProduction = process.env.NODE_ENV === 'production'
 
+const ignoredDirs = [
+  'vendor', 'node_modules', 'ifont-gen', 'plugins', 'dist', '.git'
+]
+const ignoredFiles = ['package.json', 'yarn.lock', 'snippets.json']
+
+
 export default defineConfig({
   plugins: [
     modules.sassGlobImports(),
@@ -24,28 +30,27 @@ export default defineConfig({
       plugins: [
         modules.posthtmlFetch(),
         modules.expressions(),
-        ...((isProduction)
-          ? [modules.beautify({ rules: { blankLines: '', sortAttrs: true }, })] : []
-        ),
+        modules.beautify({ rules: { blankLines: '', sortAttrs: true }, }),
         ...((templateCfg.addImgSizes) ? [modules.imgAutosize(),] : []),
         ...((isProduction && templateCfg.images.makeWebp)
           ? [modules.posthtmlWebp({ classIgnore: [...templateCfg.images.ignoreWebpClasses], }),] : []
         ),
       ],
     }),
-
     // TailwindCSS
     ...((templateCfg.tailwindcss) ? [modules.tailwindcss()] : []),
-
     // PurgeCSS "Cleaner"
     ...((isProduction && templateCfg.cleanCss) ? [
       modules.PurgeCSS({
-        content: ['./src/**/*.html', './src/**/*.js'],
+        content: ['./src/**/*.html'],
         defaultExtractor: (content) =>
           content.match(/[\w-/:]+(?<!:)/g) || [],
       }),
     ] : []),
-
+    // Parse HTML
+    ...((isProduction) ? [
+      modules.htmlParse()
+    ] : []),
     // Image optimization
     ...((isProduction && templateCfg.images.imageMin) ? [
       modules.viteImagemin({
@@ -68,7 +73,7 @@ export default defineConfig({
       enforce: 'post',
       handleHotUpdate({ file, server }) {
         console.log(file)
-        if (file.endsWith('.html')) {
+        if (file.endsWith('.html') || file.endsWith('.json')) {
           server.ws.send({ type: 'full-reload', path: '*' })
         }
       },
@@ -77,9 +82,11 @@ export default defineConfig({
 
   // CSS preprocessor
   css: {
+    devSourcemap: true,
     preprocessorOptions: {
       scss: {
-        api: 'modern-compiler',
+        sourceMap: true,
+        quietDeps: true,
       },
     },
   },
@@ -89,32 +96,17 @@ export default defineConfig({
     host: '0.0.0.0',
     watch: {
       ignored: [
-        '**/vendor/**',
-        '**/node_modules/**',
-        '**/ifont-gen/**',
-        '**/plugins/**',
-        '**/dist/**',
-        '**/.git/**',
-        '**/.gitattributes/**',
-        '**/package.json/**',
-        '**/yarn.lock/**',
-        '**/snippets.json/**',
+        ...ignoredDirs.map(dir => `**/${dir}/**`),
+        ...ignoredFiles.map(file => `**/${file}/**`),
       ],
-      include: ['./src/**/*.json'],
-    },
+    }
   },
 
   resolve: {
     alias: { ...aliases },
   },
 
-  // Build config
   build: {
-    root: './src',
-    target: 'esnext',
-    assetsDir: 'src/assets',
-    sourcemap: true,
-    assetsInlineLimit: 0,
     modulePreload: {
       polyfill: false,
     },
@@ -122,28 +114,22 @@ export default defineConfig({
     rollupOptions: {
       output: {
         format: 'es',
-        entryFileNames: 'js/[name]-[hash].js',
-        chunkFileNames: 'js/[name]-[hash].js',
         assetFileNames: (asset) => {
           const ext = asset.name.split('.').pop()
-          const srcPath = asset.originalFileNames
-            ? asset.originalFileNames[0].replace('src/assets/', '').replace(/\/([^/]+)$/g, '')
-            : ''
+          const srcPath = asset.originalFileNames?.[0].replace('src/assets/', 'assets/').replace(/\/([^/]+)$/g, '') || ''
 
           const folders = {
-            css: 'css',
             png: srcPath,
             jpg: srcPath,
             jpeg: srcPath,
             webp: srcPath,
             svg: srcPath,
-            avi: 'files/video',
-            mp4: 'files/video',
-            mebm: 'files/video',
-            woff2: 'fonts',
+            avi: 'assets/video',
+            mp4: 'assets/video',
+            mebm: 'assets/video',
+            woff2: 'assets/fonts',
           }
-
-          return `${folders[ext] || 'files'}/[name][extname]`
+          return `${folders[ext] || 'assets'}/[name][extname]`
         },
       },
     },

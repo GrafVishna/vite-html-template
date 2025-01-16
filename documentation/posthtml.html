@@ -28,7 +28,13 @@
 
          <section>
             <h2>Просте підключення компонента:</h2>
-            <p>Приклад</p>
+            <p>Приклад (з аліасом)</p>
+            <div class="code-block">
+               <code>
+                  &lt;include src="@c/header/_header.html"&gt;&lt;/include&gt;
+               </code>
+            </div>
+            <p>або (без аліасу)</p>
             <div class="code-block">
                <code>
                   &lt;include src="./src/html/components/header/_header.html"&gt;&lt;/include&gt;
@@ -42,8 +48,8 @@
             <div class="code-block">
                <code>
                   &lt;include<br>
-                  &nbsp;&nbsp;src="./src/html/components/card/_card.html"<br>
-                  &nbsp;&nbsp;locals='{"title": "Заголовок", "description": "Опис", "img": "src/assets/img/1/1.jpg"}'<br>
+                  &nbsp;&nbsp;src="@c/card/_card.html"<br>
+                  &nbsp;&nbsp;locals='{"title": "Заголовок", "description": "Опис", "img": "@img/1/1.jpg"}'<br>
                   &lt;/include&gt;
                </code>
             </div>
@@ -51,7 +57,7 @@
             <div class="code-block">
                <code id="code-output-02-format">
                   &lt;include<br>
-                  &nbsp;&nbsp;&nbsp;&nbsp;src="./src/html/components/card/_card.html"<br>
+                  &nbsp;&nbsp;&nbsp;&nbsp;src="@c/card/_card.html"<br>
                   &nbsp;&nbsp;&nbsp;&nbsp;locals='{{<br>
                   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"title": "Заголовок",<br>
                   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"description": "Опис",<br>
