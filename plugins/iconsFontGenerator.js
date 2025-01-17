@@ -4,20 +4,17 @@ import { optimize } from 'svgo'
 import fs from 'fs/promises'
 import path from 'path'
 const pkg = JSON.parse(await fs.readFile('./package.json', 'utf8'))
+import logger from './logger.js'
+import generateHtmlIcons from './GenerateHtmlIcons.js'
 
 // Configuration parameters
 const paths = {
   src: path.resolve(process.cwd(), `./fonts-convert/icons`),
-  optimizedDist: path.resolve(
-    process.cwd(),
-    `./plugins/ifont-gen/optimized-icons`
-  ),
+  optimizedDist: path.resolve(process.cwd(), `./plugins/ifont-gen/optimized-icons`),
   buildDist: path.resolve(process.cwd(), `./plugins/ifont-gen/build`),
-  templates: path.resolve(
-    process.cwd(),
-    `./plugins/ifont-gen/templates/styles`
-  ),
+  templates: path.resolve(process.cwd(), `./plugins/ifont-gen/templates/styles`),
   fonts: path.resolve(process.cwd(), './src/assets/fonts'),
+  assets: path.resolve(process.cwd(), './src/assets'),
   scss: path.resolve(process.cwd(), `src/scss/fonts`),
 }
 
@@ -37,15 +34,12 @@ const convertAndOptimizeSvg = async (file, srcDir, distDir) => {
   const outputFilePath = path.join(distDir, file)
   try {
     let svgContent = await fs.readFile(filePath, 'utf8')
-    const outlinedSvg = outlineSvg(svgContent) // Конвертація штрихів у шляхи
-    console.log(`Converted strokes to paths for: ${file}`)
-
+    const outlinedSvg = outlineSvg(svgContent)
     const optimizedSvg = optimize(outlinedSvg, {
       path: outputFilePath,
       plugins: getSvgOptimizationPlugins(),
     })
     await fs.writeFile(outputFilePath, optimizedSvg.data, 'utf8')
-    console.log(`Optimized SVG: ${file}`)
   } catch (error) {
     console.error(`Error processing file ${file}:`, error)
   }
@@ -89,49 +83,32 @@ const generateFont = async () => {
         centerVertically: true,
         normalize: true,
       },
-      website: {
-        index: 'unicode',
-        title: `${pkg.name} icons`,
-        version: pkg.version,
-        meta: {
-          description: 'Converts SVG fonts to TTF/EOT/WOFF/WOFF2/SVG format.',
-          keywords: 'icons font,TTF,EOT,WOFF,WOFF2,SVG',
-        },
-        links: [
-          { title: 'Class Demo', url: 'font-class.html' },
-          { title: 'Symbol Demo', url: 'symbol.html' },
-          { title: 'Unicode Demo', url: 'index.html' },
-        ],
-      },
     })
-    console.log('Font generation is completed!')
+    logger('Font generation is completed!', 'success')
 
     await copyGeneratedFiles()
   } catch (error) {
-    console.error('Error generating font:', error)
+    logger(`Error generating font: ${error}`, 'error')
   }
 }
 
 // Copy generated font and style files
 const copyGeneratedFiles = async () => {
   try {
-    const ttfSourcePath = path.join(
-      paths.buildDist,
-      `${fontParams.fontName}.woff2`
-    )
+    const spriteSourcePath = path.join(paths.buildDist, 'icons.symbol.svg')
+    const spriteDestPath = path.join(paths.assets, 'sprite.svg')
+    await fs.copyFile(spriteSourcePath, spriteDestPath)
+
+    const ttfSourcePath = path.join(paths.buildDist, `${fontParams.fontName}.woff2`)
     const ttfDestPath = path.join(paths.fonts, `${fontParams.fontName}.woff2`)
     await fs.copyFile(ttfSourcePath, ttfDestPath)
-    console.log(`Copied ${ttfSourcePath} to ${ttfDestPath}`)
 
-    const scssSourcePath = path.join(
-      paths.buildDist,
-      `${fontParams.fontName}.scss`
-    )
+    const scssSourcePath = path.join(paths.buildDist, `${fontParams.fontName}.scss`)
     const scssDestPath = path.join(paths.scss, `${fontParams.fontName}.scss`)
     await fs.copyFile(scssSourcePath, scssDestPath)
-    console.log(`Copied ${scssSourcePath} to ${scssDestPath}`)
+    logger(`Copied ${fontParams.fontName}.scss, ${fontParams.fontName}.woff2, sprite.svg to src directory`, 'rocket')
   } catch (error) {
-    console.error('Error copying files:', error)
+    logger(`Error copying files: ${error}`, 'error')
   }
 }
 
@@ -142,20 +119,14 @@ const clearOptimizedIconsFolder = async () => {
       await Promise.all(
         files.map((file) => fs.rm(path.join(paths.optimizedDist, file), { recursive: true, force: true }))
       )
-      console.log('Optimized icons folder cleared.')
-    } else {
-      console.log('Optimized icons folder is already empty.')
     }
   } catch (error) {
-    console.error('Error clearing optimized icons folder:', error)
+    logger(`Error clearing optimized icons folder: ${error}`, 'error')
   }
-};
+}
 
-// Main process execution
 (async () => {
   try {
-    await clearOptimizedIconsFolder()
-
     await createDirectoryIfNotExists(paths.optimizedDist)
 
     const svgFiles = (await fs.readdir(paths.src)).filter(
@@ -167,9 +138,12 @@ const clearOptimizedIconsFolder = async () => {
       )
     )
 
-    console.log('SVG optimization done')
+    logger('SVG optimization done', 'success')
     await generateFont()
+    await clearOptimizedIconsFolder()
+
+    await generateHtmlIcons()
   } catch (error) {
-    console.error('Error while performing:', error)
+    logger(`Error while performing: ${error}`, 'error')
   }
 })()

@@ -1,0 +1,283 @@
+
+      <!DOCTYPE html>
+      <html lang="en">
+         <head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <title>Icons</title>
+            
+      <style>
+         @font-face {
+            font-family: 'IconFont';
+            src: url('data:font/woff2;base64,d09GMgABAAAAAASoAAsAAAAACSgAAARZAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHFQGYACDGgqGQIVMATYCJAMUCwwABCAFg3IHTBvlByMRdnswqib7iwTelNbJoKi1sA5rqGX8qHKwW4QDG+HgTD70nvUmKCZLoVmwXPogoDnxS/ru5aaMadwLxZKcB9/lMz5hPxnQNgAIatfe1AQSamBZmgYWBhQGwI9frbb//36zItqIhKKNHr/YfQ/V6hI5REKjczohus08eV/fWegrsc+GOXPMLEmFijHK5j+/CwiAipKBaQUlalis5qH94YLjOwnUtWR1dzZDsXDjlFpCgZBZ1+ZcshAp8JW5iwAL+OfJhy4UAINP8Oeq6Mhvw8Uv5AvHAUAdV4fq6zVhPAPgASwg7Mm8ZOhhNdgSwhhTKcwJmgznEPjCmUxfSEY/9z88gGCwOCAFHptBnpXh4AtJENjCAAEWFgiwcGDfEcxnayggEPCLTHirH/8SgvDCFxmHZ/T0MTdXjtGNGqMZOWbkcF37iMacINRTCDs3I61dICF1EMKMUGj6MGtoAAyWrW0WikTaA2kHJ/CdbZrO5g51u4GnnNqcmKmJYmjWBE10QidBI0GHBQZaUR1RMqWTBJSvNGai20Rvo/qp+ialT7WSlCMRdpLugSA80xjDK+CHiW2EXzLmG3XCnNQ7kVeIpCOTMiStpKaz425mXdSsU7fPlqRJz57NMRonPn2qnVNqJ0nSbKJ5gLFzzq6JO2fvnrRH/mTK2LFRrbJI8FMnxU6BwbYpqVVNopfPGrbi+xWo2k5d81P5iUWis+/WW5cOne8v+l0LbSgSi/qLXq0SUb/MqVosDZDH3Lp8eP/2W8f8mtyGPt7nlf9if7f+i+L0QxLPoovsHPZlYOAr0X+Jv0pVtLhItbgs9lssLhEXiU0ibRQXi0Mnv+zTD0mSL9+/6jOwsyJmwLLISI6ix6N+BK+Lb4RMBvbKZhB9dGFEdqn3rcy+q2ghJRiddS88q3r/rnVV78sHnkI91qB2RGyuPrnp1evYEXxLwq+FSKiMPfrmB/LQgusT0zNz64aiA3fRELzhWtYOUuiJpu3WWT3p6d3j0rtyYUJMZnSNy+iGuRiqCg4p1IQUaLRisAPqFrEcH3HDDvFeyL3gcyHn8IP3ys/rep7L/jc14cB1AGB/9ve/bRxenRqe2WiZ9r8QbLFPBz6vYcpOnk8hqsC81xZYnAqKaKs/FzMnqRjgHwJWt3LnlIE3ETCLAVAUYELUyvXrRAneXA0w5Phax+KZiTm5tY4ncNDJ8Lx1VKiAzQJblWCRrARBtTkdw0J/HYsaK+bk03U8Bwt1MtR2HaXFwdWCgJCtmAUd7oH62ph1dDrqg9bNdEBbNe2vGPFAyzxK4H9wt+68V6As7TDQ4XHbCE5LCwpfTd6ffV0r6U8rQXswCzrcA/W1MeuayuAHd1SPQm9oq0YTj/jQTZlHuYj/wd268yGoIEla2id4OI8ywhaAtviUkwuKSbiazkiefR3aKSuu7mzd36UuAAr/kjyJwjhMwjTMAr7ZWvrmYkKxokwm2rGcD+eZtmwPAgAAAA==') format('woff2');
+            font-weight: normal;
+            font-style: normal;
+         }
+
+         * {
+            margin: 0;
+            padding: 0;
+            list-style: none;
+         }
+
+         body {
+            color: #696969;
+            font: 12px/1.5 tahoma, arial sans-serif;
+         }
+
+         a {
+            color: #333;
+            text-decoration: underline;
+         }
+
+         a:hover {
+            color: rgb(9, 73, 209);
+         }
+
+         .icon {
+            font-family: 'IconFont';
+            font-size: 24px;
+            transition: all 0.4s ease;
+         }
+
+         .header {
+            color: #333;
+            text-align: center;
+            padding: 80px 0 40px 0;
+            font-size: 14px;
+         }
+
+         .header .logo svg {
+            height: 120px;
+            width: 120px;
+         }
+
+         .header h1 {
+            font-size: 42px;
+            padding: 26px 0 10px 0;
+         }
+
+         .header h1 span {
+            text-transform: capitalize;
+         }
+
+         .header sup {
+            font-size: 14px;
+            margin: 8px 0 0 8px;
+            position: absolute;
+            color: #7b7b7b;
+         }
+
+         .info {
+            color: #999;
+            font-weight: normal;
+            max-width: 346px;
+            margin: 0 auto;
+            font-size: 12px;
+            transition: all 0.4s ease;
+            text-align: left;
+         }
+
+         .info td {
+            padding: 2px 0;
+         }
+
+         .info .info-value {
+            padding-left: 5px;
+         }
+            
+         .info .info-value span {
+            cursor: pointer;
+            transition: all 0.4s ease;
+         }
+
+         .info .info-value span:hover {
+            color: #3c75e4;
+         }
+
+         .copy-message {
+            text-align: center;
+            padding: 5px 20px;
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            color: #3c75e4;
+            border-radius: 3px;
+            border: 1px solid #3c75e4;
+            opacity: 0;
+            transition: all 0.4s ease;
+         }
+
+         .copy-show .copy-message {
+            opacity: 1;
+         }
+
+         .icons {
+            position: relative;
+            max-width: 1190px;
+            margin: 0 auto;
+            padding-top: 40px;
+         }
+
+         .icons ul {
+            text-align: center;
+         }
+
+         .icons ul li {
+            vertical-align: top;
+            width: 160px;
+            display: inline-block;
+            text-align: center;
+            background-color: rgba(0, 0, 0, .02);
+            border-radius: 3px;
+            padding: 20px 15px;
+            margin-right: 10px;
+            margin-top: 10px;
+            transition: all 0.4s ease;
+         }
+
+         .icons ul li:hover {
+            background-color: rgba(0, 0, 0, .06);
+         }
+
+         .icons ul li:hover span.icon {
+            color: #3c75e4;
+            opacity: 1;
+         }
+
+         .icons ul li h4 {
+            font-weight: normal;
+            padding: 10px 0 5px 0;
+            display: block;
+            color: #8c8c8c;
+            font-size: 15px;
+            line-height: 12px;
+            opacity: 0.8;
+            transition: all 0.4s ease;
+            margin-bottom: 10px;
+         }
+
+         .icons ul li:hover h4 {
+            opacity: 1;
+            color: #3c75e4;
+         }
+         .icons ul li:hover .info {
+            color: #616161;
+         }
+      </style>
+         </head>
+         <body>
+
+            <div class="header">
+               <h1><span>template</span> icons<sup>1.0.2</sup></h1>
+            </div>
+
+            <div class="icons">
+               <div data-copy-message class="copy-message">qweqwe</div>
+               <ul>
+                  
+      <li>
+         <span class="icon _icon-arrow">&#59905;</span>
+         <h4 class="name">arrow</h4>
+         <table class="info">
+            <tr>
+               <td>class:</td>
+               <td class="info-value"><span data-copy="_icon-arrow" title="Click to copy">_icon-arrow</span></td>
+            </tr>
+            <tr>
+               <td>unicode:</td>
+               <td class="info-value"><span data-copy="&amp;#59905;" title="Click to copy">&amp;#59905;</span></td>
+            </tr>
+            <tr>
+               <td>encoded:</td>
+               <td class="info-value"><span data-copy="\ea01" title="Click to copy">\ea01</span></td>
+            </tr>
+         </table>
+      </li>
+      <li>
+         <span class="icon _icon-checked">&#59906;</span>
+         <h4 class="name">checked</h4>
+         <table class="info">
+            <tr>
+               <td>class:</td>
+               <td class="info-value"><span data-copy="_icon-checked" title="Click to copy">_icon-checked</span></td>
+            </tr>
+            <tr>
+               <td>unicode:</td>
+               <td class="info-value"><span data-copy="&amp;#59906;" title="Click to copy">&amp;#59906;</span></td>
+            </tr>
+            <tr>
+               <td>encoded:</td>
+               <td class="info-value"><span data-copy="\ea02" title="Click to copy">\ea02</span></td>
+            </tr>
+         </table>
+      </li>
+      <li>
+         <span class="icon _icon-home">&#59907;</span>
+         <h4 class="name">home</h4>
+         <table class="info">
+            <tr>
+               <td>class:</td>
+               <td class="info-value"><span data-copy="_icon-home" title="Click to copy">_icon-home</span></td>
+            </tr>
+            <tr>
+               <td>unicode:</td>
+               <td class="info-value"><span data-copy="&amp;#59907;" title="Click to copy">&amp;#59907;</span></td>
+            </tr>
+            <tr>
+               <td>encoded:</td>
+               <td class="info-value"><span data-copy="\ea03" title="Click to copy">\ea03</span></td>
+            </tr>
+         </table>
+      </li>
+      <li>
+         <span class="icon _icon-instagram">&#59908;</span>
+         <h4 class="name">instagram</h4>
+         <table class="info">
+            <tr>
+               <td>class:</td>
+               <td class="info-value"><span data-copy="_icon-instagram" title="Click to copy">_icon-instagram</span></td>
+            </tr>
+            <tr>
+               <td>unicode:</td>
+               <td class="info-value"><span data-copy="&amp;#59908;" title="Click to copy">&amp;#59908;</span></td>
+            </tr>
+            <tr>
+               <td>encoded:</td>
+               <td class="info-value"><span data-copy="\ea04" title="Click to copy">\ea04</span></td>
+            </tr>
+         </table>
+      </li>
+               </ul>
+            </div>
+
+            <script>
+               let timeoutId = null;
+               document.addEventListener('click', function (event) {
+                  const target = event.target
+                  const copyValue = target.getAttribute('data-copy')
+                  const copyModal = document.querySelector('[data-copy-message]')
+
+                  if (copyValue) {
+                     if (timeoutId) {
+                        clearTimeout(timeoutId)
+                     }
+                     navigator.clipboard.writeText(copyValue).then(function () {
+                        copyModal.innerText = `Copied: ${copyValue}`
+                        document.documentElement.classList.add('copy-show')
+                        timeoutId = setTimeout(() => {
+                           document.documentElement.classList.remove('copy-show')
+                        }, 1500)
+                     }).catch(function (error) {
+                        copyModal.innerText = `Failed to copy: ${error} `
+                        document.documentElement.classList.add('copy-show')
+                        timeoutId = setTimeout(() => {
+                           document.documentElement.classList.remove('copy-show')
+                        }, 1500)
+                     })
+                  }
+               })
+            </script>
+         </body>
+      </html>

@@ -2,7 +2,6 @@ import { defineConfig } from 'vite'
 import path from 'path'
 import templateCfg from './template.config.js'
 import modules from './imports.js'
-import postcssPresetEnv from 'postcss-preset-env'
 
 const makeAliases = (aliases) => {
   return Object.entries(aliases).reduce((acc, [key, value]) => {
@@ -72,7 +71,6 @@ export default defineConfig({
       name: 'custom-hmr',
       enforce: 'post',
       handleHotUpdate({ file, server }) {
-        console.log(file)
         if (file.endsWith('.html') || file.endsWith('.json')) {
           server.ws.send({ type: 'full-reload', path: '*' })
         }

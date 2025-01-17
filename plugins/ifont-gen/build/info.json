@@ -1,8 +1,26 @@
 {
-  "instagram": {
+  "arrow": {
     "encodedCode": "\\ea01",
     "prefix": "_icon",
-    "className": "_icon-instagram",
+    "className": "_icon-arrow",
     "unicode": "&#59905;"
+  },
+  "checked": {
+    "encodedCode": "\\ea02",
+    "prefix": "_icon",
+    "className": "_icon-checked",
+    "unicode": "&#59906;"
+  },
+  "home": {
+    "encodedCode": "\\ea03",
+    "prefix": "_icon",
+    "className": "_icon-home",
+    "unicode": "&#59907;"
+  },
+  "instagram": {
+    "encodedCode": "\\ea04",
+    "prefix": "_icon",
+    "className": "_icon-instagram",
+    "unicode": "&#59908;"
   }
 }
