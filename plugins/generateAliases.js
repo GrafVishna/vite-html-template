@@ -17,8 +17,8 @@ function generateConfigFiles() {
    }
 
    const vscodeSettings = {
-      'path-intellisense.mappings': Object.entries(aliases).reduce((acc, [key, value]) => {
-         acc[key] = path.join('${workspaceFolder}', value).replace(/\\+/g, '/')
+      'path-autocomplete.pathMappings': Object.entries(aliases).reduce((acc, [key, value]) => {
+         acc[key] = path.join('${folder}', value).replace(/\\+/g, '/')
          return acc
       }, {}),
    }

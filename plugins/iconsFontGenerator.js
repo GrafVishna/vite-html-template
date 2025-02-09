@@ -5,7 +5,7 @@ import fs from 'fs/promises'
 import path from 'path'
 const pkg = JSON.parse(await fs.readFile('./package.json', 'utf8'))
 import logger from './logger.js'
-import generateHtmlIcons from './GenerateHtmlIcons.js'
+import generateHtmlIcons from './generateHtmlIcons.js'
 
 // Configuration parameters
 const paths = {
