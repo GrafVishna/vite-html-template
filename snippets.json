@@ -28,6 +28,14 @@
     ],
     "description": "Умова з if, elseif та else"
   },
+  "Tabs": {
+    "scope": "html",
+    "prefix": "tabs",
+    "body": [
+      "<div data-tabs class=\"${1:tabs}\">\n\t<nav data-tabs-titles class=\"${1:tabs}__navigation\">\n\t\t<button type=\"button\" class=\"${1:tabs}__title _tab-active\">Таб №1</button>\n\t\t<button type=\"button\" class=\"${1:tabs}__title\">Таб №2</button>\n\t\t<button type=\"button\" class=\"${1:tabs}__title\">Таб №3</button>\n\t</nav>\n\t<div data-tabs-body class=\"${1:tabs}__content\">\n\t\t<div class=\"${1:tabs}__body\">\n\t\t\tВміст першого таба\n\t\t</div>\n\t\t<div class=\"${1:tabs}__body\">\n\t\t\tВміст другого таба\n\t\t</div>\n\t\t<div class=\"${1:tabs}__body\">\n\t\t\tВміст третього таба\n\t\t</div>\n\t</div>\n</div>"
+    ],
+    "description": "Додає базовий HTML код табів"
+  },
   "Switch Case": {
     "prefix": "switch",
     "body": [
