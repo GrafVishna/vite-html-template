@@ -44,6 +44,11 @@ TF.menuInit()
 // import "./libs/gallery.js"
 
 // ? ===============================================
+/* Tabs */
+
+// import "./scripts/tabs.js"
+
+// ? ===============================================
 /* Modals Popups */
 // Documentation: https://micromodal.vercel.app/
 

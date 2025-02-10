@@ -1,13 +1,13 @@
 {
-  "path-intellisense.mappings": {
-    "@h": "${workspaceFolder}/src/html/",
-    "@o": "${workspaceFolder}/src/html/other/",
-    "@c": "${workspaceFolder}/src/html/components/",
-    "@ui": "${workspaceFolder}/src/html/UI/",
-    "@j": "${workspaceFolder}/src/js/",
-    "@s": "${workspaceFolder}/src/scss/",
-    "@i": "${workspaceFolder}/src/assets/img/",
-    "@v": "${workspaceFolder}/src/assets/video/",
-    "@f": "${workspaceFolder}/src/assets/files/"
+  "path-autocomplete.pathMappings": {
+    "@h": "${folder}/src/html/",
+    "@o": "${folder}/src/html/other/",
+    "@c": "${folder}/src/html/components/",
+    "@ui": "${folder}/src/html/UI/",
+    "@j": "${folder}/src/js/",
+    "@s": "${folder}/src/scss/",
+    "@i": "${folder}/src/assets/img/",
+    "@v": "${folder}/src/assets/video/",
+    "@f": "${folder}/src/assets/files/"
   }
 }
