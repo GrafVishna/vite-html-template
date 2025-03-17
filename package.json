@@ -32,7 +32,6 @@
     "posthtml-fetch": "3.0.0",
     "posthtml-img-autosize": "^0.1.6",
     "posthtml-replace": "^0.1.3",
-    "posthtml-webp": "^2.2.0",
     "prettier": "^3.3.3",
     "process": "^0.11.10",
     "purgecss": "^6.0.0",
@@ -48,15 +47,11 @@
   "dependencies": {
     "@davestewart/outliner": "^1.2.0",
     "@svgdotjs/svg.js": "^3.2.4",
-    "@vheemstra/vite-plugin-imagemin": "^2.0.0",
     "@vituum/vite-plugin-postcss": "^1.1.0",
     "@vituum/vite-plugin-posthtml": "^1.1.0",
     "cheerio": "^1.0.0",
     "flatten-js": "^0.6.9",
     "gsap": "^3.12.5",
-    "imagemin-mozjpeg": "^10.0.0",
-    "imagemin-pngquant": "^10.0.0",
-    "imagemin-webp": "^8.0.0",
     "node-html-parser": "^6.1.13",
     "postcss-url": "^10.1.3",
     "posthtml": "^0.16.6",
@@ -65,8 +60,7 @@
     "posthtml-picture-srcset": "^1.0.2",
     "svgdom": "^0.1.19",
     "vite": "^5.4.10",
-    "vite-plugin-html-resolve-alias": "^2.0.0",
-    "vite-plugin-image-optimizer": "^1.1.8"
+    "vite-plugin-html-resolve-alias": "^2.0.0"
   },
   "resolutions": {
     "rollup": "npm:@rollup/wasm-node@latest"
