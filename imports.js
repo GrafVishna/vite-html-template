@@ -8,10 +8,6 @@ import imgAutosize from 'posthtml-img-autosize'
 import posthtmlWebp from 'posthtml-webp'
 import posthtmlReplace from 'posthtml-replace'
 import PurgeCSS from 'vite-plugin-purgecss'
-import viteImagemin from '@vheemstra/vite-plugin-imagemin'
-import imageminMozjpeg from 'imagemin-mozjpeg'
-import imageminWebp from 'imagemin-webp'
-import imageminPngquant from 'imagemin-pngquant'
 import posthtml from './plugins/posthtml/customPostHtml.js'
 import htmlParse from './plugins/htmlParse.js'
 
@@ -27,9 +23,5 @@ export default {
    posthtmlWebp,
    posthtmlReplace,
    PurgeCSS,
-   viteImagemin,
-   imageminMozjpeg,
-   imageminWebp,
-   imageminPngquant,
    htmlParse
 }

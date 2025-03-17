@@ -2,6 +2,7 @@ import { defineConfig } from 'vite'
 import path from 'path'
 import templateCfg from './template.config.js'
 import modules from './imports.js'
+import { vitePluginImageOptimizer } from "./plugins/imageOptimizer.js"
 
 const makeAliases = (aliases) => {
   return Object.entries(aliases).reduce((acc, [key, value]) => {
@@ -31,9 +32,6 @@ export default defineConfig({
         modules.expressions(),
         modules.beautify({ rules: { blankLines: '', sortAttrs: true }, }),
         ...((templateCfg.addImgSizes) ? [modules.imgAutosize(),] : []),
-        ...((isProduction && templateCfg.images.makeWebp)
-          ? [modules.posthtmlWebp({ classIgnore: [...templateCfg.images.ignoreWebpClasses], }),] : []
-        ),
       ],
     }),
     // TailwindCSS
@@ -48,22 +46,10 @@ export default defineConfig({
     ] : []),
     // Parse HTML
     ...((isProduction) ? [
-      modules.htmlParse()
+      // modules.htmlParse()
     ] : []),
-    // Image optimization
-    ...((isProduction && templateCfg.images.imageMin) ? [
-      modules.viteImagemin({
-        plugins: {
-          jpg: modules.imageminMozjpeg({ quality: templateCfg.images.imageQuality.jpg || 75 }),
-          png: modules.imageminPngquant({ quality: templateCfg.images.imageQuality.png || [0.6, 0.8] }),
-        },
-        makeWebp: templateCfg.images.makeWebp ? {
-          plugins: {
-            jpg: modules.imageminWebp({ quality: templateCfg.images.imageQuality.webp || 75 }),
-            png: modules.imageminWebp({ quality: templateCfg.images.imageQuality.webp || 75 }),
-          },
-        } : undefined,
-      }),
+    ...((isProduction && templateCfg.images.makeWebp) ? [
+      vitePluginImageOptimizer(templateCfg.images.imageQuality),
     ] : []),
 
     // Hot Module Replacement
@@ -97,6 +83,13 @@ export default defineConfig({
         ...ignoredDirs.map(dir => `**/${dir}/**`),
         ...ignoredFiles.map(file => `**/${file}/**`),
       ],
+    },
+    proxy: {
+      '/api': {
+        target: `http://${templateCfg.serverProxy.domain}:${templateCfg.serverProxy.port}`,
+        changeOrigin: true,
+        rewrite: (path) => path.replace(new RegExp(`^${templateCfg.serverProxy.target}`), '')
+      }
     }
   },
 

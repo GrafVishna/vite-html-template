@@ -2,15 +2,21 @@ export default {
    tailwindcss: true,
    cleanCss: false,
    images: {
-      imageMin: true,
-      makeWebp: false,
-      addImgSizes: false,
+      imageMin: false,
+      makeWebp: true,
       ignoreWebpClasses: ['ignore-webp'],
       imageQuality: {
-         jpg: 80,
-         png: [0.6, 0.8],
-         webp: 80
+         generateWebP: true,
+         webpOptions: { lossless: false, quality: 75 },
+         jpegOptions: { quality: 80, progressive: true, mozjpeg: true },
+         pngOptions: { compressionLevel: 9, progressive: true },
       }
+   },
+
+   serverProxy: {
+      target: '/api',
+      domain: 'localhost',
+      port: 8000
    },
 
    aliases: {

@@ -23,7 +23,6 @@ function generateConfigFiles() {
       }, {}),
    }
 
-   fs.writeFileSync(path.resolve('jsconfig.json'), JSON.stringify(jsConfig, null, 2))
    fs.writeFileSync(path.resolve('.vscode/settings.json'), JSON.stringify(vscodeSettings, null, 2))
 
    console.log('Config files have been generated!')

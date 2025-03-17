@@ -1,215 +1,243 @@
-const FESpoilers = (selector, options = {}) => {
-  const defaultOptions = {
-    selector: selector ? selector : '[data-spoiler]',
-    contentSelector: '[data-spoiler-content]',
-    titleSelector: '[data-spoiler-title]',
-    resizeAttribute: 'data-spoiler-resize',
-    stateAttribute: 'data-spoiler-state',
-    groupAttribute: 'data-spoiler-group',
-    showClass: 'spoiler-open',
-    activeContentClass: 'show',
-    hideAttr: 'hide',
-    showAttr: 'show',
-    initClass: 'init',
-    initShowClass: 'init-show',
-    initHiddenClass: 'init-hidden',
-    duration: 350,
-    initDelay: 0,
-  };
 
-  const settings = { ...defaultOptions, ...options };
+class FESpoilers {
+  constructor(selector, options = {}) {
+    this.defaultOptions = {
+      selector: selector || '[data-spoiler]',
+      contentSelector: '[data-spoiler-content]',
+      titleSelector: '[data-spoiler-title]',
+      resizeAttribute: 'data-spoiler-resize',
+      stateAttribute: 'data-spoiler-state',
+      groupAttribute: 'data-spoiler-group',
+      showClass: 'spoiler-open',
+      activeContentClass: 'show',
+      hideAttr: 'hide',
+      showAttr: 'show',
+      initClass: 'init',
+      initShowClass: 'init-show',
+      initHiddenClass: 'init-hidden',
+      duration: 350,
+      initDelay: 0,
+    }
 
-  const spoilers = document.querySelectorAll(settings.selector);
-  if (!spoilers.length) return;
+    this.settings = { ...this.defaultOptions, ...options }
+    this.spoilers = document.querySelectorAll(this.settings.selector)
+    if (!this.spoilers.length) return
 
-  const closeGroup = (spoiler, target) => {
-    spoilers.forEach((spoiler) => {
-      if (
-        spoiler.group &&
-        spoiler.getAttribute(settings.groupAttribute) === spoiler.group
-      ) {
-        if (target !== spoiler) {
-          close(spoiler);
-        } else {
-          if (spoiler.classList.contains(settings.activeContentClass)) {
-            close(spoiler);
-          } else {
-            open(spoiler);
-          }
-        }
-      }
-    });
-  };
+    this.timeoutMap = new WeakMap()
+    this.spoilers.forEach(spoiler => this.setupSpoiler(spoiler))
+  }
 
-  const toggle = (spoiler) => {
-    if (getIsOpenState(spoiler)) {
-      close(spoiler);
+  setupSpoiler(spoiler) {
+    spoiler.screen = spoiler.hasAttribute(this.settings.resizeAttribute)
+      ? parseInt(spoiler.getAttribute(this.settings.resizeAttribute))
+      : null
+    spoiler.group = spoiler.hasAttribute(this.settings.groupAttribute)
+      ? spoiler.getAttribute(this.settings.groupAttribute)
+      : null
+    spoiler.content = spoiler.querySelector(this.settings.contentSelector)
+    spoiler.titleBtn = spoiler.querySelector(this.settings.titleSelector)
+
+    spoiler._content = spoiler.content
+    spoiler._titleBtn = spoiler.titleBtn
+
+    this.startClasses(spoiler)
+
+    if (spoiler.screen) {
+      this.resizeHandler(spoiler)
     } else {
-      open(spoiler);
+      this.init(spoiler)
     }
-  };
+  }
 
-  const open = (spoiler) => {
-    spoiler.setAttribute(settings.stateAttribute, settings.showAttr);
-    spoiler.classList.add(settings.activeContentClass);
-    animation(spoiler);
-  };
+  startClasses(spoiler) {
+    const initState = spoiler.hasAttribute(this.settings.stateAttribute)
+      ? spoiler.getAttribute(this.settings.stateAttribute)
+      : this.settings.hideAttr
 
-  const close = (spoiler) => {
-    spoiler.setAttribute(settings.stateAttribute, settings.hideAttr);
-    animation(spoiler);
-  };
+    if (initState === this.settings.showAttr) {
+      spoiler.classList.add(this.settings.initShowClass)
+    } else if (initState === this.settings.hideAttr) {
+      spoiler.classList.add(this.settings.initHiddenClass)
+    }
+  }
 
-  const getIsOpenState = (spoiler) => {
-    return spoiler.getAttribute(settings.stateAttribute) === settings.showAttr;
-  };
+  init(spoiler) {
+    if (!spoiler.titleBtn || !spoiler.content) return
 
-  const animation = (() => {
-    const timeoutMap = new WeakMap();
+    spoiler.titleBtn.setAttribute('aria-expanded', this.getIsOpenState(spoiler))
+    spoiler.content.setAttribute('aria-hidden', !this.getIsOpenState(spoiler))
 
-    const setTransitionStyles = (element, height) => {
-      element.style.height = height;
-      element.style.transition = `height ${settings.duration}ms ease`;
-    };
-
-    const resetStyles = (element) => {
-      element.style.height = '';
-      element.style.transition = '';
-    };
-
-    const handleTimeout = (element, callback) => {
-      const previousTimeoutId = timeoutMap.get(element);
-      if (previousTimeoutId) {
-        clearTimeout(previousTimeoutId);
+    const handler = (event) => {
+      if (event.type === 'click' || event.key === 'Enter' || event.key === ' ') {
+        this.clickHandler(spoiler)
       }
-
-      const timeoutId = setTimeout(() => {
-        callback();
-        timeoutMap.delete(element);
-      }, settings.duration);
-
-      timeoutMap.set(element, timeoutId);
-    };
-
-    return (spoiler) => {
-      const currentState = getIsOpenState(spoiler);
-
-      const openContent = () => {
-        const height = spoiler.content.offsetHeight;
-        setTransitionStyles(spoiler.content, '0');
-        spoiler.content.offsetHeight;
-        setTransitionStyles(spoiler.content, `${height}px`);
-        handleTimeout(spoiler.content, resetStyles.bind(null, spoiler.content));
-      };
-
-      const closeContent = () => {
-        setTransitionStyles(
-          spoiler.content,
-          `${spoiler.content.offsetHeight}px`
-        );
-        spoiler.content.offsetHeight;
-        setTransitionStyles(spoiler.content, '0');
-
-        handleTimeout(spoiler.content, () => {
-          resetStyles(spoiler.content);
-          spoiler.classList.remove(settings.activeContentClass);
-        });
-      };
-
-      if (currentState) {
-        spoiler.classList.add(settings.activeContentClass, settings.showClass);
-        openContent();
-      } else {
-        spoiler.classList.remove(settings.showClass);
-        closeContent();
-      }
-    };
-  })();
-
-  const clickHandler = (spoiler) => {
-    if (spoiler.group) {
-      console.log(spoiler.group);
-      closeGroup(spoiler, spoiler);
-    } else {
-      toggle(spoiler);
     }
-  };
+    spoiler.titleBtn.addEventListener('click', handler)
+    spoiler._clickHandler = handler
+    spoiler.classList.add(this.settings.initClass)
 
-  const init = (spoiler) => {
-    const isOpen = getIsOpenState(spoiler);
-    const handler = () => clickHandler(spoiler);
-
-    if (!spoiler.titleBtn || !spoiler.content) return;
-    if (isOpen) open(spoiler);
-    spoiler.content.style.transition = `all 0ms ease`;
-    spoiler.classList.add(settings.initClass);
-
-    spoiler.titleBtn.addEventListener('click', handler);
-    spoiler._clickHandler = handler;
-  };
-
-  const startClasses = (spoiler) => {
-    const initState = spoiler.hasAttribute(settings.stateAttribute)
-      ? spoiler.getAttribute(settings.stateAttribute)
-      : settings.hideAttr;
-    if (initState === settings.showAttr) {
-      spoiler.classList.add(settings.initShowClass);
-      spoiler.classList.add(settings.initShowClass);
-    } else if (initState === settings.hideAttr) {
-      spoiler.classList.add(settings.initHiddenClass);
+    if (this.getIsOpenState(spoiler)) {
+      this.open(spoiler)
     }
-  };
+  }
 
-  const destroy = (spoiler) => {
-    spoiler.classList.remove(settings.initClass);
-    spoiler.setAttribute(settings.stateAttribute, settings.hideAttr);
-
+  destroy(spoiler) {
+    spoiler.classList.remove(this.settings.initClass)
+    spoiler.setAttribute(this.settings.stateAttribute, this.settings.hideAttr)
     if (spoiler._clickHandler) {
-      spoiler.titleBtn.removeEventListener('click', spoiler._clickHandler);
-      delete spoiler._clickHandler;
+      spoiler.titleBtn.removeEventListener('click', spoiler._clickHandler)
+      delete spoiler._clickHandler
     }
-  };
+  }
 
-  const resizeHandler = (spoiler) => {
-    let isInit = false;
+  destroyAll() {
+    this.spoilers.forEach(spoiler => this.destroy(spoiler))
+  }
+
+  resizeHandler(spoiler) {
+    let isInit = false
 
     const initAction = () => {
-      init(spoiler);
-      isInit = true;
-    };
+      this.init(spoiler)
+      isInit = true
+    }
 
     const destroyAction = () => {
-      destroy(spoiler);
-      isInit = false;
-    };
-
-    window.innerWidth <= spoiler.screen ? initAction() : () => {};
-    window.addEventListener('resize', () => {
-      if (window.innerWidth <= spoiler.screen && !isInit) {
-        initAction();
-      } else if (window.innerWidth > spoiler.screen && isInit) {
-        destroyAction();
-      }
-    });
-  };
-
-  spoilers.forEach((spoiler) => {
-    spoiler.screen = spoiler.hasAttribute(settings.resizeAttribute)
-      ? parseInt(spoiler.getAttribute(settings.resizeAttribute))
-      : null;
-    spoiler.group = spoiler.hasAttribute(settings.groupAttribute)
-      ? spoiler.getAttribute(settings.groupAttribute)
-      : null;
-    spoiler.content = spoiler.querySelector(settings.contentSelector);
-    spoiler.titleBtn = spoiler.querySelector(settings.titleSelector);
-
-    startClasses(spoiler);
-    if (spoiler.screen) {
-      resizeHandler(spoiler);
-    } else {
-      init(spoiler);
+      this.destroy(spoiler)
+      isInit = false
     }
-  });
-};
 
-export default FESpoilers;
+    const handleResize = () => {
+      if (window.innerWidth <= spoiler.screen && !isInit) {
+        initAction()
+      } else if (window.innerWidth > spoiler.screen && isInit) {
+        destroyAction()
+      }
+    }
+
+    const debouncedResize = this.debounce(handleResize, 200)
+    window.addEventListener('resize', debouncedResize)
+  }
+
+  debounce(func, wait) {
+    let timeout
+    return function (...args) {
+      clearTimeout(timeout)
+      timeout = setTimeout(() => func.apply(this, args), wait)
+    }
+  }
+
+  clickHandler(spoiler) {
+    if (spoiler.group) {
+      this.closeGroup(spoiler)
+    } else {
+      this.toggle(spoiler)
+    }
+  }
+
+  toggle(spoiler) {
+    if (this.getIsOpenState(spoiler)) {
+      this.close(spoiler)
+    } else {
+      this.open(spoiler)
+    }
+  }
+
+  open(spoiler) {
+    spoiler.setAttribute(this.settings.stateAttribute, this.settings.showAttr)
+    spoiler.classList.add(this.settings.activeContentClass, this.settings.showClass)
+    spoiler.titleBtn.setAttribute('aria-expanded', 'true')
+    spoiler.content.setAttribute('aria-hidden', 'false')
+    this.animation(spoiler, true)
+  }
+
+  close(spoiler) {
+    spoiler.setAttribute(this.settings.stateAttribute, this.settings.hideAttr)
+    spoiler.classList.remove(this.settings.showClass)
+    spoiler.titleBtn.setAttribute('aria-expanded', 'false')
+    spoiler.content.setAttribute('aria-hidden', 'true')
+    this.animation(spoiler, false)
+  }
+
+  getIsOpenState(spoiler) {
+    return spoiler.getAttribute(this.settings.stateAttribute) === this.settings.showAttr
+  }
+
+  closeGroup(targetSpoiler) {
+    this.spoilers.forEach(spoiler => {
+      if (
+        spoiler.group &&
+        spoiler.getAttribute(this.settings.groupAttribute) === targetSpoiler.group
+      ) {
+        if (targetSpoiler !== spoiler) {
+          this.close(spoiler)
+        } else {
+          this.toggle(spoiler)
+        }
+      }
+    })
+  }
+
+  animation(spoiler, isOpen) {
+    const element = spoiler.content
+    const duration = this.settings.duration
+
+    const setTransitionStyles = (height) => {
+      element.style.height = height
+      element.style.transition = `height ${duration}ms ease`
+    }
+
+    const resetStyles = () => {
+      element.style.height = ''
+      element.style.transition = ''
+      if (!isOpen) {
+        spoiler.classList.remove(this.settings.activeContentClass)
+      }
+    }
+
+    const handleTimeout = (callback) => {
+      const previousTimeoutId = this.timeoutMap.get(element)
+      if (previousTimeoutId) {
+        clearTimeout(previousTimeoutId)
+      }
+      const timeoutId = setTimeout(() => {
+        callback()
+        this.timeoutMap.delete(element)
+      }, duration)
+      this.timeoutMap.set(element, timeoutId)
+    }
+
+    if (isOpen) {
+      const height = element.offsetHeight
+      setTransitionStyles('0')
+      element.offsetHeight
+      setTransitionStyles(`${height}px`)
+      handleTimeout(resetStyles)
+    } else {
+      setTransitionStyles(`${element.offsetHeight}px`)
+      element.offsetHeight
+      setTransitionStyles('0')
+      handleTimeout(resetStyles)
+    }
+  }
+
+  update() {
+    const newSpoilers = document.querySelectorAll(this.settings.selector)
+
+    this.spoilers.forEach(spoiler => {
+      if (![...newSpoilers].includes(spoiler)) {
+        this.destroy(spoiler)
+      }
+    })
+
+    this.spoilers = newSpoilers
+
+    this.spoilers.forEach(spoiler => {
+      if (!spoiler.classList.contains(this.settings.initClass)) {
+        this.setupSpoiler(spoiler)
+      }
+    })
+  }
+}
+
+export default FESpoilers
