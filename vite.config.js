@@ -36,20 +36,19 @@ export default defineConfig({
     }),
     // TailwindCSS
     ...((templateCfg.tailwindcss) ? [modules.tailwindcss()] : []),
-    // PurgeCSS "Cleaner"
-    ...((isProduction && templateCfg.cleanCss) ? [
-      modules.PurgeCSS({
-        content: ['./src/**/*.html'],
-        defaultExtractor: (content) =>
-          content.match(/[\w-/:]+(?<!:)/g) || [],
-      }),
-    ] : []),
     // Parse HTML
     ...((isProduction) ? [
       // modules.htmlParse()
     ] : []),
     ...((isProduction && templateCfg.images.makeWebp) ? [
       vitePluginImageOptimizer(templateCfg.images.imageQuality),
+    ] : []),
+
+    // PurgeCSS "Cleaner"
+    ...((isProduction && templateCfg.cleanCss) ? [
+      modules.PurgeCSS({
+        defaultExtractor: (content) => content.match(/[\w-/:]+(?<!:)/g) || [],
+      }),
     ] : []),
 
     // Hot Module Replacement

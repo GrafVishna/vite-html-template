@@ -1,13 +1,9 @@
-body {
-   background: url('@i/2.jpg') 0 0 no-repeat;
-}
-
-@import "tailwindcss";
+// @import "tailwindcss";
 
 // Mixins, variables, base, fonts etc.
-@import "connect";
+// @import "connect";
 // Global styles
-@import "global";
+// @import "global";
 // Components
 @import "../html/components/**/*.scss";
 
