@@ -1,8 +1,7 @@
 export default {
    tailwindcss: true,
    images: {
-      imageMin: false,
-      makeWebp: false,
+      makeWebp: true,
       ignoreWebpClasses: ['ignore-webp'],
       imageQuality: {
          generateWebP: true,

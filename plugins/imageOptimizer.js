@@ -5,7 +5,6 @@ import { promises as fsPromises } from "fs"
 import { load } from "cheerio"
 import postcss from "postcss"
 
-// Функція для рекурсивного обходу директорії
 function walkDir(dir, callback) {
    const files = fs.readdirSync(dir, { withFileTypes: true })
    for (const file of files) {
@@ -18,7 +17,6 @@ function walkDir(dir, callback) {
    }
 }
 
-// Функція для оптимізації зображень
 async function optimizeImages(imageDir, options = {}) {
    const {
       generateWebP = true,
@@ -27,9 +25,11 @@ async function optimizeImages(imageDir, options = {}) {
       pngOptions = { compressionLevel: 9, progressive: true },
    } = options
 
+   const generatedWebPFiles = new Set()
+
    if (!fs.existsSync(imageDir)) {
       console.log(`Директорія ${imageDir} не існує, пропускаємо оптимізацію зображень.`)
-      return
+      return generatedWebPFiles
    }
 
    const imageFiles = []
@@ -39,9 +39,6 @@ async function optimizeImages(imageDir, options = {}) {
       }
    })
 
-   // Зберігаємо список згенерованих WebP файлів
-   const generatedWebPFiles = new Set()
-
    for (const inputFilePath of imageFiles) {
       const outputDir = path.dirname(inputFilePath)
       const fileNameWithoutExt = path.basename(inputFilePath, path.extname(inputFilePath))
@@ -49,7 +46,6 @@ async function optimizeImages(imageDir, options = {}) {
       const tempFilePath = path.join(outputDir, `${fileNameWithoutExt}_temp${ext}`)
 
       try {
-         // Оптимізація оригінального файлу (збереження у тимчасовий файл)
          if (ext === ".jpg" || ext === ".jpeg") {
             await sharp(inputFilePath)
                .jpeg(jpegOptions)
@@ -60,10 +56,8 @@ async function optimizeImages(imageDir, options = {}) {
                .toFile(tempFilePath)
          }
 
-         // Замінюємо оригінальний файл тимчасовим
          await fsPromises.rename(tempFilePath, inputFilePath)
 
-         // Генерація WebP, якщо включена опція
          if (generateWebP) {
             const outputFilePathWebP = path.join(outputDir, `${fileNameWithoutExt}.webp`)
             await sharp(inputFilePath)
@@ -80,7 +74,6 @@ async function optimizeImages(imageDir, options = {}) {
    return generatedWebPFiles
 }
 
-// Функція для оновлення HTML-файлів
 async function updateHtmlFiles(outputDir, generatedWebPFiles, options = {}) {
    const htmlFiles = []
    walkDir(outputDir, (filePath) => {
@@ -94,7 +87,6 @@ async function updateHtmlFiles(outputDir, generatedWebPFiles, options = {}) {
          const htmlContent = await fsPromises.readFile(htmlFile, "utf-8")
          const $ = load(htmlContent)
 
-         // Знаходимо всі теги <img> і оновлюємо src
          $("img").each((i, element) => {
             const src = $(element).attr("src")
             if (src && /\.(jpe?g|png)$/i.test(src)) {
@@ -106,7 +98,6 @@ async function updateHtmlFiles(outputDir, generatedWebPFiles, options = {}) {
             }
          })
 
-         // Знаходимо теги <source> у <picture> і оновлюємо srcset
          $("picture source").each((i, element) => {
             const srcset = $(element).attr("srcset")
             if (srcset && /\.(jpe?g|png)$/i.test(srcset)) {
@@ -114,12 +105,11 @@ async function updateHtmlFiles(outputDir, generatedWebPFiles, options = {}) {
                const absoluteWebpPath = path.join(outputDir, webpSrcset)
                if (generatedWebPFiles.has(absoluteWebpPath)) {
                   $(element).attr("srcset", webpSrcset)
-                  $(element).attr("type", "image/webp") // Додаємо тип для WebP
+                  $(element).attr("type", "image/webp")
                }
             }
          })
 
-         // Знаходимо всі елементи з атрибутом style і оновлюємо url у background
          $("[style]").each((i, element) => {
             const style = $(element).attr("style")
             if (style && /url\(['"]?.*?\.(jpe?g|png)['"]?\)/i.test(style)) {
@@ -138,7 +128,6 @@ async function updateHtmlFiles(outputDir, generatedWebPFiles, options = {}) {
             }
          })
 
-         // Записуємо оновлений HTML назад у файл
          const updatedHtml = $.html()
          await fsPromises.writeFile(htmlFile, updatedHtml, "utf-8")
       } catch (error) {
@@ -147,7 +136,6 @@ async function updateHtmlFiles(outputDir, generatedWebPFiles, options = {}) {
    }
 }
 
-// Функція для оновлення CSS-файлів
 async function updateCssFiles(outputDir) {
    const cssFiles = []
    walkDir(outputDir, (filePath) => {
@@ -160,16 +148,13 @@ async function updateCssFiles(outputDir) {
       try {
          const cssContent = await fsPromises.readFile(cssFile, "utf-8")
          const result = await postcss([
-            // Наш власний плагін для заміни формату
             {
                postcssPlugin: "replace-image-format",
                Declaration: (decl) => {
-                  // Шукаємо декларації, які містять url()
                   if (decl.value.includes("url(")) {
                      decl.value = decl.value.replace(
                         /url\(['"]?(.*?)\.(jpe?g|png)(['"]?)\)/gi,
                         (match, url, ext, closingQuote) => {
-                           // Замінюємо розширення на .webp, зберігаючи оригінальні лапки
                            const newUrl = `${url}.webp`
                            return `url('${newUrl}'${closingQuote ? ")" : ""})`
                         }
@@ -183,7 +168,6 @@ async function updateCssFiles(outputDir) {
          console.error(`Помилка при оновленні CSS-файлу ${cssFile}:`, error)
       }
    }
-
 }
 
 // Плагін для Vite
