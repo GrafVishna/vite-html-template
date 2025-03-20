@@ -4,6 +4,7 @@ import templateConfig from '../template.config.js'
 
 function generateConfigFiles() {
    const aliases = templateConfig.aliases
+   const componentsImports = templateConfig.componentsImports || { html: [], scss: [] }
 
    const jsConfig = {
       compilerOptions: {
@@ -21,6 +22,10 @@ function generateConfigFiles() {
          acc[key] = path.join('${folder}', value).replace(/\\+/g, '/')
          return acc
       }, {}),
+      'viteHtmlComponentCreator.defaultImports': {
+         html_imports: componentsImports.html || [],
+         scss_imports: componentsImports.scss || [],
+      },
    }
 
    fs.writeFileSync(path.resolve('.vscode/settings.json'), JSON.stringify(vscodeSettings, null, 2))

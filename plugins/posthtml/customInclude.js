@@ -17,14 +17,7 @@ import templateCfg from '../../template.config.js'
 export default (options = {}) => {
    const { root = './', encoding = 'utf-8', aliases = {}, posthtmlExpressionsOptions = { locals: false } } = options
 
-   const defaultAliases = {
-      '@h': './src/html/',
-      '@c': './src/html/components/',
-      '@j': '/src/js/',
-      '@s': '/src/scss/',
-      '@i': '/src/assets/img/',
-      '@f': '/src/assets/files/',
-   }
+   const defaultAliases = {}
 
    const finalAliases = { ...defaultAliases, ...templateCfg.aliases }
 
@@ -46,7 +39,7 @@ export default (options = {}) => {
          if (src) {
             Object.keys(finalAliases).forEach((alias) => {
                if (src.startsWith(alias)) {
-                  src = src.replace(alias, finalAliases[alias])
+                  src = src.replace(alias, `.${finalAliases[alias]}`)
                }
             })
 

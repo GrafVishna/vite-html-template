@@ -22,7 +22,7 @@ const ignoredFiles = ['package.json', 'yarn.lock', 'snippets.json']
 
 export default defineConfig({
   plugins: [
-    modules.sassGlobImports(),
+    // modules.sassGlobImports(),
     modules.vituum(),
     modules.posthtml({
       encoding: 'utf-8',
@@ -36,19 +36,8 @@ export default defineConfig({
     }),
     // TailwindCSS
     ...((templateCfg.tailwindcss) ? [modules.tailwindcss()] : []),
-    // Parse HTML
-    ...((isProduction) ? [
-      // modules.htmlParse()
-    ] : []),
     ...((isProduction && templateCfg.images.makeWebp) ? [
       vitePluginImageOptimizer(templateCfg.images.imageQuality),
-    ] : []),
-
-    // PurgeCSS "Cleaner"
-    ...((isProduction && templateCfg.cleanCss) ? [
-      modules.PurgeCSS({
-        defaultExtractor: (content) => content.match(/[\w-/:]+(?<!:)/g) || [],
-      }),
     ] : []),
 
     // Hot Module Replacement
@@ -68,6 +57,7 @@ export default defineConfig({
     devSourcemap: true,
     preprocessorOptions: {
       scss: {
+        additionalData: `@import "@s/connect";\n`,
         sourceMap: true,
         quietDeps: true,
       },

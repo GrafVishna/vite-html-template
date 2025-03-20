@@ -6,7 +6,6 @@ import expressions from 'posthtml-expressions'
 import beautify from 'posthtml-beautify'
 import imgAutosize from 'posthtml-img-autosize'
 import posthtmlReplace from 'posthtml-replace'
-import PurgeCSS from 'vite-plugin-purgecss'
 import posthtml from './plugins/posthtml/customPostHtml.js'
 import htmlParse from './plugins/htmlParse.js'
 
@@ -20,6 +19,5 @@ export default {
    beautify,
    imgAutosize,
    posthtmlReplace,
-   PurgeCSS,
    htmlParse
 }

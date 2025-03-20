@@ -4,7 +4,7 @@ import * as TF from './scripts/functions.js'
 /* Menu */
 // Documentation inside the module file functions.js
 
-TF.menuInit()
+// TF.menuInit()
 
 // ? ===============================================
 /* Go To Block */
@@ -35,7 +35,7 @@ TF.menuInit()
 /* Swiper Slider */
 // Documentation of the plugin: https://swiperjs.com/
 
-// import "./libs/swiper.js"
+import "./libs/swiper.js"
 
 // ? ===============================================
 /* Go To Block */
@@ -52,9 +52,9 @@ TF.menuInit()
 /* Modals Popups */
 // Documentation: https://micromodal.vercel.app/
 
-import "./libs/modal.js"
+// import "./libs/modal.js"
 
-import "./scripts/wrap.js"
+// import "./scripts/wrap.js"
 
 // ? ===============================================
 

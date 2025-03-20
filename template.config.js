@@ -1,6 +1,5 @@
 export default {
    tailwindcss: true,
-   cleanCss: true,
    images: {
       imageMin: false,
       makeWebp: false,
@@ -20,18 +19,19 @@ export default {
    },
 
    aliases: {
-      // HTML componentS
-      '@h': './src/html/',
-      '@o': './src/html/other/',
-      '@c': './src/html/components/',
-      '@ui': './src/html/UI/',
-      // JS files
+      '@h': '/src/html/',
+      '@o': '/src/html/other/',
+      '@c': '/src/html/components/',
+      '@ui': '/src/html/components/UI/',
       '@j': '/src/js/',
-      // Styles
       '@s': '/src/scss/',
-      // Media & files
       '@i': '/src/assets/img/',
       '@v': '/src/assets/video/',
       '@f': '/src/assets/files/'
+   },
+
+   componentsImports: {
+      html: ["<link rel='stylesheet' href='@c/{component}/{component}.scss'/>"],
+      scss: []
    }
 }
