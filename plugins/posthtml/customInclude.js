@@ -25,11 +25,33 @@ export default (options = {}) => {
       tree.parser = tree.parser || parser
       tree.match = tree.match || match
 
+      tree.match({ tag: 'fetch' }, (node) => {
+         let url = node.attrs.url || false
+         let content = node.content || []
+
+         if (url) {
+            Object.keys(finalAliases).forEach((alias) => {
+               if (url.startsWith(alias)) {
+                  url = url.replace(alias, `.${finalAliases[alias]}`)
+               }
+            })
+            // Оновлюємо атрибут url із заміненим значенням
+            node.attrs.url = url
+         }
+
+         return {
+            tag: 'fetch', // Залишаємо тег <fetch> у дереві
+            attrs: node.attrs,
+            content, // Залишаємо вміст без змін
+         }
+      })
+
       tree.match({ tag: 'include' }, (node) => {
          let src = node.attrs.src || false
          let content
          let subtree
          let source
+
 
          let currentPosthtmlExpressionsOptions = { ...posthtmlExpressionsOptions }
          if (options.delimiters) {
