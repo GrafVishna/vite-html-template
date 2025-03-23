@@ -2,7 +2,6 @@ import { defineConfig } from 'vite'
 import path from 'path'
 import templateCfg from './template.config.js'
 import modules from './imports.js'
-import { vitePluginImageOptimizer } from "./plugins/imageOptimizer.js"
 
 const makeAliases = (aliases) => {
   return Object.entries(aliases).reduce((acc, [key, value]) => {
@@ -15,15 +14,16 @@ const aliases = makeAliases(templateCfg.aliases)
 const isProduction = process.env.NODE_ENV === 'production'
 
 const ignoredDirs = [
-  'vendor', 'node_modules', 'ifont-gen', 'plugins', 'dist', '.git'
+  'vendor', 'node_modules', 'plugins', 'dist', '.git', 'documentation', 'fonts-convert'
 ]
-const ignoredFiles = ['package.json', 'yarn.lock', 'snippets.json']
+const ignoredFiles = ['package.json', 'yarn.lock', 'snippets.json', 'README.md']
 
 
 export default defineConfig({
   plugins: [
-    // modules.sassGlobImports(),
     modules.vituum(),
+
+    // PostHTML
     modules.posthtml({
       encoding: 'utf-8',
       root: process.cwd(),
@@ -34,10 +34,13 @@ export default defineConfig({
         ...((templateCfg.addImgSizes) ? [modules.imgAutosize(),] : []),
       ],
     }),
+
     // TailwindCSS
     ...((templateCfg.tailwindcss) ? [modules.tailwindcss()] : []),
+
+    // Image optimization
     ...((isProduction && templateCfg.images.makeWebp) ? [
-      vitePluginImageOptimizer(templateCfg.images.imageQuality),
+      modules.vitePluginImageOptimizer(templateCfg.images.imageQuality),
     ] : []),
 
     // Hot Module Replacement
@@ -57,7 +60,7 @@ export default defineConfig({
     devSourcemap: true,
     preprocessorOptions: {
       scss: {
-        additionalData: `@import "@s/connect";\n`,
+        additionalData: `@import "@s/connect";`,
         sourceMap: true,
         quietDeps: true,
       },
@@ -87,15 +90,11 @@ export default defineConfig({
   },
 
   build: {
-    // modulePreload: {
-    //   polyfill: false,
-    // },
-
     rollupOptions: {
       output: {
         format: 'es',
         assetFileNames: (asset) => {
-          const ext = asset.name.split('.').pop()
+          const ext = asset.name.split('').pop()
           const srcPath = asset.originalFileNames?.[0].replace('src/assets/', 'assets/').replace(/\/([^/]+)$/g, '') || ''
 
           const folders = {

@@ -6,17 +6,6 @@ function generateConfigFiles() {
    const aliases = templateConfig.aliases
    const componentsImports = templateConfig.componentsImports || { html: [], scss: [] }
 
-   const jsConfig = {
-      compilerOptions: {
-         target: 'esnext',
-         baseUrl: './',
-         paths: Object.entries(aliases).reduce((acc, [key, value]) => {
-            acc[key + '/*'] = [path.join(value, '*').replace(/\\+/g, '/')]
-            return acc
-         }, {}),
-      },
-   }
-
    const vscodeSettings = {
       'path-autocomplete.pathMappings': Object.entries(aliases).reduce((acc, [key, value]) => {
          acc[key] = path.join('${folder}', value).replace(/\\+/g, '/')

@@ -4,7 +4,7 @@ import posthtml from 'posthtml'
 import { parser } from 'posthtml-parser'
 import { match } from 'posthtml/lib/api'
 import expressions from 'posthtml-expressions'
-import templateCfg from '../../template.config.js'
+import replaceAliases from './posthtmlReplaceAliases.js'
 
 /**
  * Tagin Tags <Include> and alias replacement in attributes.
@@ -15,36 +15,11 @@ import templateCfg from '../../template.config.js'
  * @returns {Function}
  */
 export default (options = {}) => {
-   const { root = './', encoding = 'utf-8', aliases = {}, posthtmlExpressionsOptions = { locals: false } } = options
-
-   const defaultAliases = {}
-
-   const finalAliases = { ...defaultAliases, ...templateCfg.aliases }
+   const { root = './', encoding = 'utf-8', posthtmlExpressionsOptions = { locals: false } } = options
 
    return function posthtmlInclude(tree) {
       tree.parser = tree.parser || parser
       tree.match = tree.match || match
-
-      tree.match({ tag: 'fetch' }, (node) => {
-         let url = node.attrs.url || false
-         let content = node.content || []
-
-         if (url) {
-            Object.keys(finalAliases).forEach((alias) => {
-               if (url.startsWith(alias)) {
-                  url = url.replace(alias, `.${finalAliases[alias]}`)
-               }
-            })
-            // Оновлюємо атрибут url із заміненим значенням
-            node.attrs.url = url
-         }
-
-         return {
-            tag: 'fetch', // Залишаємо тег <fetch> у дереві
-            attrs: node.attrs,
-            content, // Залишаємо вміст без змін
-         }
-      })
 
       tree.match({ tag: 'include' }, (node) => {
          let src = node.attrs.src || false
@@ -52,18 +27,14 @@ export default (options = {}) => {
          let subtree
          let source
 
-
          let currentPosthtmlExpressionsOptions = { ...posthtmlExpressionsOptions }
          if (options.delimiters) {
             currentPosthtmlExpressionsOptions.delimiters = options.delimiters
          }
 
          if (src) {
-            Object.keys(finalAliases).forEach((alias) => {
-               if (src.startsWith(alias)) {
-                  src = src.replace(alias, `.${finalAliases[alias]}`)
-               }
-            })
+            // Заміна аліасів в src та додавання крапки на початку
+            src = replaceAliases(src, { prependDot: true })
 
             src = path.resolve(root, src)
             source = fs.readFileSync(src, encoding)
@@ -106,16 +77,15 @@ export default (options = {}) => {
          }
       })
 
+      // Обробка аліасів у всіх атрибутах
       tree.match({ attrs: true }, (node) => {
+         const dotsTags = ['fetch', 'each']
+         const shouldPrependDot = dotsTags.includes(node.tag)
+
          Object.keys(node.attrs).forEach((attr) => {
             let value = node.attrs[attr]
             if (typeof value === 'string') {
-               Object.keys(finalAliases).forEach((alias) => {
-                  if (value.startsWith(alias)) {
-                     value = value.replace(alias, finalAliases[alias])
-                  }
-               })
-               node.attrs[attr] = value
+               node.attrs[attr] = replaceAliases(value, { prependDot: shouldPrependDot })
             }
          })
          return node

@@ -5,9 +5,6 @@
 //? Base tailwind styles
 @import "tailwindcss";
 
-//? Mixins, parameters, media queries.
-@import "connect";
-
 //? Fonts, icons font
 @import "fonts/fonts";
 
@@ -22,6 +19,7 @@
 // ================================================================
 
 // @import "libs/swiper-base";
+// @import "libs/gallery/lightgallery";
 
 // ================================================================
 //? Other styles ==================================================
