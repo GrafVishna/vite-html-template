@@ -1,26 +1,44 @@
 {
-  "arrow": {
+  "E-mail": {
     "encodedCode": "\\ea01",
     "prefix": "_icon",
-    "className": "_icon-arrow",
+    "className": "_icon-E-mail",
     "unicode": "&#59905;"
   },
-  "checked": {
+  "Information": {
     "encodedCode": "\\ea02",
     "prefix": "_icon",
-    "className": "_icon-checked",
+    "className": "_icon-Information",
     "unicode": "&#59906;"
   },
-  "home": {
+  "Phone": {
     "encodedCode": "\\ea03",
     "prefix": "_icon",
-    "className": "_icon-home",
+    "className": "_icon-Phone",
     "unicode": "&#59907;"
   },
-  "instagram": {
+  "Region": {
     "encodedCode": "\\ea04",
     "prefix": "_icon",
-    "className": "_icon-instagram",
+    "className": "_icon-Region",
     "unicode": "&#59908;"
+  },
+  "facebook": {
+    "encodedCode": "\\ea05",
+    "prefix": "_icon",
+    "className": "_icon-facebook",
+    "unicode": "&#59909;"
+  },
+  "instagram": {
+    "encodedCode": "\\ea06",
+    "prefix": "_icon",
+    "className": "_icon-instagram",
+    "unicode": "&#59910;"
+  },
+  "star": {
+    "encodedCode": "\\ea07",
+    "prefix": "_icon",
+    "className": "_icon-star",
+    "unicode": "&#59911;"
   }
 }

@@ -1,5 +1,5 @@
-@import 'lg-variables';
-@import 'lg-mixins';
+@use "gallery-inc.scss" as *;
+
 .lg-outer {
   .lg-img-rotate {
     position: absolute;
@@ -9,8 +9,10 @@
     bottom: 0;
     @include transitionCustom(transform 0.4s cubic-bezier(0, 0, 0.25, 1) 0s);
   }
+
   &[data-lg-slide-type='video'],
   &[data-lg-slide-type='iframe'] {
+
     .lg-rotate-left,
     .lg-rotate-right,
     .lg-flip-ver,
@@ -20,27 +22,33 @@
     }
   }
 }
+
 .lg-rotate-left {
   &:after {
     content: '\e900';
   }
 }
+
 .lg-rotate-right {
   &:after {
     content: '\e901';
   }
 }
+
 .lg-icon {
+
   &.lg-flip-hor,
   &.lg-flip-ver {
     font-size: 26px;
   }
 }
+
 .lg-flip-ver {
   &:after {
     content: '\e903';
   }
 }
+
 .lg-flip-hor {
   &:after {
     content: '\e902';

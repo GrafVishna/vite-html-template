@@ -1,5 +1,5 @@
-@import 'lg-variables';
-@import 'lg-mixins';
+@use "gallery-inc.scss" as *;
+
 .lg-outer {
   .lg-pager-outer {
     text-align: center;

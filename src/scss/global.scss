@@ -1,3 +1,6 @@
+@use "@s/inc" as *;
+@use "sass:math";
+
 html,
 body {
   scroll-behavior: smooth;
@@ -12,8 +15,12 @@ body,
 }
 
 body {
-  font-family: var(--ff-primary);
-  font-weight: 400;
+  font-family: var(--font-main);
+  font-size: var(--text-base);
+  font-weight: var(--weight-regular);
+  line-height: var(--text-base-line);
+  background-color: var(--color-bg);
+  color: var(--color-text);
   font-style: normal;
   min-width: 320px;
 
@@ -33,4 +40,25 @@ body {
   main {
     flex: 1 1 auto;
   }
+}
+
+//========================================================================================================================================================
+
+
+//========================================================================================================================================================
+
+.s-btn {
+  padding: toRem(12);
+  text-transform: uppercase;
+  font-weight: var(--weight-medium);
+  font-size: var(--text-sm);
+  line-height: var(--text-sm-line);
+}
+
+.primary-bg {
+  background-color: var(--color-primary);
+}
+
+.primary-dark-bg {
+  background-color: var(--color-primary-dark);
 }

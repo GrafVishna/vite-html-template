@@ -3,24 +3,119 @@
 // ================================================================
 
 //? Base tailwind styles
-@import "tailwindcss";
+@forward "@s/tailwindcss";
 
 //? Fonts, icons font
-@import "fonts/fonts";
+@forward "@s/fonts/fonts";
 
 //? Variables, reset styles
-@import "base/base";
+@forward "@s/base/base";
 
 //? Global styles
-@import "global";
+@forward "@s/global";
 
 // ================================================================
 //? Libs styles ===================================================
 // ================================================================
 
-// @import "libs/swiper-base";
-// @import "libs/gallery/lightgallery";
+@forward "@s/libs/swiper-base";
+@forward "@s/libs/gallery/lightgallery";
 
 // ================================================================
 //? Other styles ==================================================
 // ================================================================
+
+
+.spoiler {
+   &__panel {
+      .init & {
+         cursor: pointer;
+         user-select: none;
+      }
+   }
+
+   &__content {
+      transition: all 0s;
+      overflow: hidden;
+
+      display: none;
+
+      .init-show &,
+      .init-hidden & {
+         display: block;
+      }
+
+      .init & {
+         display: none;
+      }
+
+      .init.show & {
+         display: block;
+      }
+   }
+}
+
+//  init close
+.spoiler.init {
+   .spoiler__content {
+      &>* {
+         transition: opacity 0.5s;
+         opacity: 0;
+      }
+   }
+}
+
+// init open
+.spoiler.init.spoiler-open {
+   .spoiler__content {
+      &>* {
+         opacity: 1;
+      }
+   }
+}
+
+// =================================
+
+.spoilers {
+   padding: toRem(50) 0;
+}
+
+.spoiler {
+   &__panel {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+   }
+
+   &__icon {
+      display: inline-block;
+      transition: transform 0.5s;
+      display: none;
+
+      .spoiler-open & {
+         transform: scale(1, -1);
+      }
+
+      .init & {
+         display: inline-block;
+      }
+
+      svg {
+         width: toRem(22);
+         height: toRem(22);
+      }
+   }
+
+   &__content {}
+
+   &__text {
+      padding: toRem(20);
+   }
+
+   &__content {}
+
+   &__body {
+      background: rgba(241, 241, 241, 1);
+      padding: toRem(20);
+   }
+}

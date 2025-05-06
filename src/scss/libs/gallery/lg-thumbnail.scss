@@ -1,5 +1,4 @@
-@import 'lg-variables';
-@import 'lg-mixins';
+@use "gallery-inc.scss" as *;
 $thumbnails-margin: 5px;
 
 .lg-outer {
@@ -27,6 +26,7 @@ $thumbnails-margin: 5px;
         @include transition-duration(0s !important);
       }
     }
+
     &.lg-rebuilding-thumbnails {
       .lg-thumb {
         @include transition-duration(0s !important);
@@ -36,9 +36,11 @@ $thumbnails-margin: 5px;
     &.lg-thumb-align-middle {
       text-align: center;
     }
+
     &.lg-thumb-align-left {
       text-align: left;
     }
+
     &.lg-thumb-align-right {
       text-align: right;
     }
@@ -56,6 +58,7 @@ $thumbnails-margin: 5px;
     margin-bottom: -$thumbnails-margin;
     display: inline-block;
     vertical-align: middle;
+
     @media (min-width: 768px) {
       padding: 10px 0;
     }
@@ -69,6 +72,7 @@ $thumbnails-margin: 5px;
     border-radius: 2px;
     margin-bottom: $thumbnails-margin;
     will-change: border-color;
+
     @media (min-width: 768px) {
       border-radius: 4px;
       border: 2px solid #fff;
@@ -99,6 +103,7 @@ $thumbnails-margin: 5px;
       content: '\e1ff';
     }
   }
+
   &.lg-animate-thumb {
     .lg-thumb {
       @include transition-timing-function(cubic-bezier(0.215, 0.61, 0.355, 1));

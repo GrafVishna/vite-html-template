@@ -1,14 +1,21 @@
 export default {
    tailwindcss: true,
    images: {
-      makeWebp: false,
-      ignoreWebpClasses: ['ignore-webp'],
-      imageQuality: {
+      makeWebp: true,
+      optimizeNoWebp: true,
+      webpQuality: {
          generateWebP: true,
          webpOptions: { lossless: false, quality: 75 },
          jpegOptions: { quality: 80, progressive: true, mozjpeg: true },
          pngOptions: { compressionLevel: 9, progressive: true },
-      }
+      },
+      imgQuality: {
+         generateWebP: false,
+         jpegOptions: { quality: 80, progressive: true, mozjpeg: true },
+         pngOptions: { compressionLevel: 9, progressive: true },
+      },
+      ignoreWebpClasses: ['ignore-webp'],
+      ignoreOptimizeClasses: ['ignore-optimize'],
    },
 
    serverProxy: {

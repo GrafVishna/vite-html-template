@@ -1,5 +1,5 @@
-@import 'lg-variables';
-@import 'lg-mixins';
+@use "gallery-inc.scss" as *;
+
 .lg-progress-bar {
   background-color: $lg-progress-bar-bg;
   height: $lg-progress-bar-height;
@@ -34,8 +34,10 @@
     .lg-show-autoplay & {
       content: '\e01a';
     }
+
     content: '\e01d';
   }
+
   .lg-single-item & {
     opacity: $lg-toolbar-icon-disabled-opacity;
     pointer-events: none;

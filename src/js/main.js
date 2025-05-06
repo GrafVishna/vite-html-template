@@ -4,7 +4,7 @@ import * as TF from './scripts/functions.js'
 /* Menu */
 // Documentation inside the module file functions.js
 
-// TF.menuInit()
+TF.menuInit()
 
 // ? ===============================================
 /* Go To Block */
@@ -35,7 +35,7 @@ import * as TF from './scripts/functions.js'
 /* Swiper Slider */
 // Documentation of the plugin: https://swiperjs.com/
 
-import "./libs/swiper.js"
+// import "./libs/swiper.js"
 
 // ? ===============================================
 /* Go To Block */

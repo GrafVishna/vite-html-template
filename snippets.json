@@ -1,4 +1,18 @@
 {
+  "Include mixins & parameters": {
+    "scope": "scss",
+    "prefix": "sas",
+    "body": ["@use \"@s/inc\" as *;"],
+    "description": "Вставляє підключення міксинів в scss"
+  },
+  "Include responseSize": {
+    "scope": "scss",
+    "prefix": "rs",
+    "body": [
+      "@include responseSize('font-size', ${1:min}, ${2:val}, ${3:max});"
+    ],
+    "description": "Адаптивна властивість в залежності від розміру контейнера."
+  },
   "Include Component": {
     "prefix": "include",
     "body": ["<include src=\"@c${1:/component_path}\"></include>"],

@@ -1,3 +1,5 @@
+@use 'sass:list';
+
 // Vendor Prefixes
 //
 // All vendor mixins are deprecated as of v3.2.0 due to the introduction of
@@ -255,49 +257,58 @@
 
 @function prefix($property, $prefixes: webkit moz o ms) {
   $vendor-prefixed-properties: transform background-clip background-size;
-  $result: ();
+  $result: (
+  );
 
-  @each $prefix in $prefixes {
-    @if index($vendor-prefixed-properties, $property) {
-      $property: -#{$prefix}-#{$property};
-    }
-    $result: append($result, $property);
+@each $prefix in $prefixes {
+  @if list.index($vendor-prefixed-properties, $property) {
+    $property: -#{$prefix}-#{$property};
   }
-  @return $result;
+
+  $result: list.append($result, $property);
+}
+
+@return $result;
 }
 
 @function trans-prefix($transition, $prefix: moz) {
-  $prefixed: ();
+  $prefixed: (
+  );
 
-  @each $trans in $transition {
-    $prop-name: nth($trans, 1);
-    $vendor-prop-name: prefix($prop-name, $prefix);
-    $prop-vals: nth($trans, 2);
-    $prefixed: append($prefixed, $vendor-prop-name $prop-vals, comma);
-  }
-  @return $prefixed;
+@each $trans in $transition {
+  $prop-name: list.nth($trans, 1);
+  $vendor-prop-name: prefix($prop-name, $prefix);
+  $prop-vals: list.nth($trans, 2);
+  $prefixed: list.append($prefixed, $vendor-prop-name $prop-vals, comma);
+}
+
+@return $prefixed;
 }
 
 @mixin transitionCustom($values...) {
-  $transitions: ();
+  $transitions: (
+  );
 
-  @each $declaration in $values {
-    $prop: nth($declaration, 1);
-    $prop-opts: ();
-    $length: length($declaration);
+@each $declaration in $values {
+  $prop: list.nth($declaration, 1);
+  $prop-opts: (
+  );
+$length: list.length($declaration);
 
-    @if $length >= 2 {
-      @for $i from 2 through $length {
-        $prop-opts: append($prop-opts, nth($declaration, $i));
-      }
-    }
-    $trans: $prop, $prop-opts;
-    $transitions: append($transitions, $trans, comma);
+@if $length >=2 {
+  @for $i from 2 through $length {
+    $prop-opts: list.append($prop-opts, list.nth($declaration, $i));
   }
-  -webkit-transition: trans-prefix($transitions, webkit);
-  -moz-transition: trans-prefix($transitions, moz);
-  -o-transition: trans-prefix($transitions, o);
-  transition: $values;
+}
+
+$trans: $prop, $prop-opts;
+$transitions: list.append($transitions, $trans, comma);
+}
+
+-webkit-transition: trans-prefix($transitions, webkit);
+-moz-transition: trans-prefix($transitions, moz);
+-o-transition: trans-prefix($transitions, o);
+transition: $values;
 }
 
 // User select

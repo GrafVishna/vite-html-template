@@ -18,7 +18,6 @@ const ignoredDirs = [
 ]
 const ignoredFiles = ['package.json', 'yarn.lock', 'snippets.json', 'README.md']
 
-
 export default defineConfig({
   plugins: [
     modules.vituum(),
@@ -38,9 +37,13 @@ export default defineConfig({
     // TailwindCSS
     ...((templateCfg.tailwindcss) ? [modules.tailwindcss()] : []),
 
-    // Image optimization
-    ...((isProduction && templateCfg.images.makeWebp) ? [
-      modules.vitePluginImageOptimizer(templateCfg.images.imageQuality),
+    // Image optimization & webp
+    ...((isProduction && templateCfg.images.makeWebp && !templateCfg.images.optimizeNoWebp) ? [
+      modules.vitePluginImageOptimizer(templateCfg.images.webpQuality),
+    ] : []),
+    // Image optimization & no webp
+    ...((isProduction && templateCfg.images.optimizeNoWebp) ? [
+      modules.vitePluginImageOptimizer(templateCfg.images.imgQuality),
     ] : []),
 
     // Hot Module Replacement
@@ -60,7 +63,8 @@ export default defineConfig({
     devSourcemap: true,
     preprocessorOptions: {
       scss: {
-        additionalData: `@import "@s/connect";`,
+        api: 'modern-compiler',
+        additionalData: `@use "@s/inc" as *;`,
         sourceMap: true,
         quietDeps: true,
       },
@@ -90,11 +94,16 @@ export default defineConfig({
   },
 
   build: {
+    cssCodeSplit: false,
+    emptyOutDir: true,
     rollupOptions: {
       output: {
         format: 'es',
         assetFileNames: (asset) => {
-          const ext = asset.name.split('').pop()
+          const ext = asset.name.split('.').pop().toLowerCase()
+          if (ext === 'css') {
+            return 'assets/css/style[extname]'
+          }
           const srcPath = asset.originalFileNames?.[0].replace('src/assets/', 'assets/').replace(/\/([^/]+)$/g, '') || ''
 
           const folders = {
@@ -107,9 +116,12 @@ export default defineConfig({
             mp4: 'assets/video',
             mebm: 'assets/video',
             woff2: 'assets/fonts',
+            css: 'assets/css',
           }
           return `${folders[ext] || 'assets'}/[name][extname]`
         },
+        entryFileNames: 'assets/js/[name].js',
+        chunkFileNames: 'assets/js/[name].js',
       },
     },
   },

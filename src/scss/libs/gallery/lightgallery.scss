@@ -1,7 +1,4 @@
-@import 'lg-variables';
-@import 'lg-mixins';
-@import 'lg-fonts';
-@import 'lg-theme-default';
+@use "gallery-inc.scss" as *;
 
 // Core
-@import 'lightgallery-core';
+@forward 'lightgallery-core';

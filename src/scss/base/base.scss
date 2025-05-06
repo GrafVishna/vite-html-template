@@ -1,2 +1,3 @@
-@import "variables";
-@import "reset";
+@forward "@s/base/variables";
+@forward "@s/base/reset";
+@forward "@s/settings/containers";

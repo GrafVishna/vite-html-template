@@ -1,5 +1,5 @@
-@import 'lg-variables';
-@import 'lg-mixins';
+@use "gallery-inc.scss" as *;
+
 .lg-outer {
   .lg-dropdown-overlay {
     background-color: rgba(0, 0, 0, 0.25);
@@ -15,7 +15,9 @@
     will-change: visibility, opacity;
     @include transition(visibility 0s linear 0.18s, opacity 0.18s linear 0s);
   }
+
   &.lg-dropdown-active {
+
     .lg-dropdown,
     .lg-dropdown-overlay {
       @include transition-delay(0s);
@@ -23,10 +25,12 @@
       opacity: 1;
       visibility: visible;
     }
+
     .lg-share {
       color: #fff;
     }
   }
+
   .lg-dropdown {
     background-color: #fff;
     border-radius: 2px;
@@ -42,11 +46,9 @@
     visibility: hidden;
     @include transform(translate3d(0, 5px, 0));
     will-change: visibility, opacity, transform;
-    @include transitionCustom(
-      transform 0.18s linear 0s,
+    @include transitionCustom(transform 0.18s linear 0s,
       visibility 0s linear 0.5s,
-      opacity 0.18s linear 0s
-    );
+      opacity 0.18s linear 0s);
 
     &:after {
       content: '';
@@ -59,16 +61,19 @@
       right: 16px;
       top: -16px;
     }
-    > li {
+
+    >li {
       &:last-child {
         margin-bottom: 0px;
       }
+
       &:hover {
         a {
           color: #333;
         }
       }
     }
+
     a {
       color: #333;
       display: block;
@@ -76,16 +81,19 @@
       padding: 4px 12px;
       font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
       font-size: 12px;
+
       &:hover {
         background-color: rgba(0, 0, 0, 0.07);
       }
     }
+
     .lg-dropdown-text {
       display: inline-block;
       line-height: 1;
       margin-top: -3px;
       vertical-align: middle;
     }
+
     .lg-icon {
       color: #333;
       display: inline-block;
@@ -99,31 +107,39 @@
       width: auto;
     }
   }
+
   .lg-share {
     position: relative;
+
     &:after {
       content: '\e80d';
     }
   }
+
   .lg-share-facebook {
     .lg-icon {
       color: #3b5998;
+
       &:after {
         content: '\e904';
       }
     }
   }
+
   .lg-share-twitter {
     .lg-icon {
       color: #00aced;
+
       &:after {
         content: '\e907';
       }
     }
   }
+
   .lg-share-pinterest {
     .lg-icon {
       color: #cb2027;
+
       &:after {
         content: '\e906';
       }
