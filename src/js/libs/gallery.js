@@ -3,9 +3,9 @@
 // =============================================================================
 
 // Connecting a base set of functionality
-import lightGallery from 'lightgallery';
-
+import lightGallery from 'lightgallery'
 // =============================================================================
+import { bodyLock, bodyUnlock } from '../scripts/functions.js'
 
 // Plugins
 // lgZoom, lgAutoplay, lgComment, lgFullscreen, lgHash, lgPager, lgRotate, lgShare, lgThumbnail, lgVideo, lgMediumZoom
@@ -32,10 +32,17 @@ import lightGallery from 'lightgallery';
 
 // =============================================================================
 // Launch
-const galleries = document.querySelectorAll('[data-gallery]');
+const galleries = document.querySelectorAll('[data-gallery]')
 if (galleries.length) {
-  let galleyItems = [];
+  let galleyItems = []
   galleries.forEach((gallery) => {
+    // Events
+    gallery.addEventListener('lgBeforeOpen', beforeOpenGallery)
+    gallery.addEventListener('lgAfterOpen', afterOpenGallery)
+    gallery.addEventListener('lgBeforeClose', beforeCloseGallery)
+    gallery.addEventListener('lgAfterClose', afterCloseGallery)
+    // ======
+
     galleyItems.push({
       gallery,
       galleryClass: lightGallery(gallery, {
@@ -47,6 +54,26 @@ if (galleries.length) {
           controls: false,
         },
       }),
-    });
-  });
+    })
+  })
+}
+
+
+
+function beforeOpenGallery(event) {
+  // Перед закриттям галереї
+  bodyLock()
+}
+
+function afterOpenGallery(event) {
+  // Після відкриття галереї
+}
+
+function beforeCloseGallery(event) {
+  // Перед закриттям галереї
+  bodyUnlock()
+}
+
+function afterCloseGallery(event) {
+  // Після закриття галереї
 }

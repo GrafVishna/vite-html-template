@@ -20,7 +20,9 @@ const ignoredFiles = ['package.json', 'yarn.lock', 'snippets.json', 'README.md']
 
 export default defineConfig({
   plugins: [
-    modules.vituum(),
+    modules.vituum({
+      pages: { normalizeBasePath: true, }
+    }),
 
     // PostHTML
     modules.posthtml({

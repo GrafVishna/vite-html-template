@@ -14,8 +14,8 @@
 // $lg-progress-bar-bg: #999;
 
 // Core variables and mixins
+@use 'gallery-inc' as *;
 @forward 'lg-variables';
-@forward 'lg-mixins';
 @forward 'lg-fonts';
 @forward 'lg-theme-default';
 @forward 'lg-thumbnail';
